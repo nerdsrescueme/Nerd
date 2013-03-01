@@ -30,8 +30,19 @@ class CityFixture extends AbstractFixture implements DependentFixtureInterface
             $this->getReference('nj')
         );
 
+        $phi = new \CMS\Entity\City;
+        $phi->setZip('19134');
+        $phi->setCity('Philadelphia');
+        $phi->setCounty('Philadelphia');
+        $phi->setLatitude(39.860494);
+        $phi->setLongitude(-75.132278);
+        $phi->setState(
+            $this->getReference('pa')
+        );
+
         $manager->persist($wh);
         $manager->persist($wv);
+        $manager->persist($phi);
         $manager->flush();
     }
 

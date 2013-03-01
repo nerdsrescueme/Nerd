@@ -20,16 +20,19 @@ class CityEntityTest extends EntityTestCase
         $this->dropEntityManager();
     }
 
-    public function testGetWoodburyHeightsByZip()
+    public function testDatabaseHasFixturesInside()
     {
-        $cities = $this->getRepository('City');
-        $wh = $cities->findOneByZip('08097'); $wv = $cities->findOneByZip('08093');
+        $message = 'Unabled to find requisite records to complete tests';
+        $result = $this->getRepository('City')->findOneByZip('08097');
+        $this->assertIsObject($result, $message);
+    }
 
-die(var_dump($wh->calculateDistanceTo($wv)));
-
-        $actual = $wh->getCity();
-        $expected = 'Woodbury Heights';
-
-        $this->assertSame($actual, $expected, 'Finding city by zip code returns unexpected result');
+    /**
+     * @depends testDatabaseHasFixturesInside
+     */
+    public function testResultGetZipCodeCompensatesOctalValues()
+    {
+        $result = $this->getRepository('City')->findOneByZip('08093')->getZip();
+        $this->assertIsString($result, '->getZip() does not compensate for octal number values by returning a string');
     }
 }

@@ -223,4 +223,19 @@ class EntityTestCase extends PHPUnit_Framework_TestCase
     {
         if(!empty($this->resources)) return __DIR__ . '/../../storage/db/test.db';
     }
+
+    public function assertIsObject($input, $message = 'Failed asserting that input is an object')
+    {
+        return $this->assertTrue(is_object($input), $message);
+    }
+
+    public function assertIsString($input, $message = 'Failed asserting that input is a string')
+    {
+        return $this->assertTrue(is_string($input), $message);
+    }
+
+    public function assertIsInteger($input, $message = 'Failed asserting that input is a integer')
+    {
+        return $this->assertTrue(is_integer($input), $message);
+    }
 }

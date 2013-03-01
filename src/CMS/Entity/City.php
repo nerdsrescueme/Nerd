@@ -71,10 +71,17 @@ class City
     /**
      * Returns entity zip code
      * 
-     * @return integer
+     * Will return a string value if zip begins with "0". It does this so PHP
+     * does not interpret it as an octal number.
+     * 
+     * @return integer|string
      */
     public function getZip()
     {
+        if (strlen((string) $this->zip) != 5) {
+            return str_pad((string) $this->zip, 5, "0", STR_PAD_LEFT);
+        }
+
         return $this->zip;
     }
 
