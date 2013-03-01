@@ -1,0 +1,14 @@
+{% extends 'template.twig' %}
+
+{% block title ("Error: " ~ exception.message) %}
+
+{% block content %}
+  <h1>{{ exception.message }}</h1>
+
+  <p>A fatal exception has been thrown with the status code {{ exception.code }}.<p>
+  <p>The adimistrator of this website has been notified, please use the back button on your browser to return to the previous page.</p>
+
+  {% if debugging %}
+    {{ dump(exception) }}
+  {% endif %}
+{% endblock %}

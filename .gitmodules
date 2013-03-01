@@ -1,0 +1,3 @@
+[submodule "support/raptor"]
+	path = support/raptor
+	url = https://github.com/PANmedia/Raptor.git
