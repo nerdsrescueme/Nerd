@@ -23,9 +23,8 @@
         "aura/router": "1.0.*"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.7.*",
-        "phing/phing": "2.4.*",
-        "doctrine/data-fixtures": "1.0.x-dev"
+        "Codeception/Codeception": "dev-master",
+        "phing/phing": "2.4.*"
     },
     "autoload": {
         "psr-0": {
