@@ -78,10 +78,6 @@ class City
      */
     public function getZip()
     {
-        if (strlen((string) $this->zip) != 5) {
-            return str_pad((string) $this->zip, 5, "0", STR_PAD_LEFT);
-        }
-
         return $this->zip;
     }
 
@@ -274,26 +270,20 @@ class City
             $cosLambda = cos($lambda);
             $sinSigma  = sqrt(($cosU2 * $sinLambda) * ($cosU2 * $sinLambda) + ($cosU1 * $sinU2 - $sinU1 * $cosU2 * $cosLambda) * ($cosU1 * $sinU2 - $sinU1 * $cosU2 * $cosLambda));
 
-            if ($sinSigma == 0) {
-                return 0;
-            }
+            if ($sinSigma == 0) return 0;
 
             $cosSigma   = $sinU1 * $sinU2 + $cosU1 * $cosU2 * $cosLambda;
             $sigma      = atan2($sinSigma, $cosSigma);
             $sinAlpha   = $cosU1 * $cosU2 * $sinLambda / $sinSigma;
             $cosSqAlpha = 1 - $sinAlpha * $sinAlpha;
             $cos2SigmaM = $cosSigma - 2 * $sinU1 * $sinU2 / $cosSqAlpha;
-            if(is_nan($cos2SigmaM)) {
-                $cos2SigmaM = 0;
-            }
+            if(is_nan($cos2SigmaM)) $cos2SigmaM = 0;
             $c = $f / 16 * $cosSqAlpha * (4 + $f * (4 - 3 * $cosSqAlpha));
             $lambdaP = $lambda;
             $lambda = $L + (1 - $c) * $f * $sinAlpha * ($sigma + $c * $sinSigma * ($cos2SigmaM + $c * $cosSigma * (-1 + 2 * $cos2SigmaM * $cos2SigmaM)));
         }
 
-        if($i == 0) {
-            return false;  //formula failed to converge
-        }
+        if($i == 0) return false;
 
         $uSq = $cosSqAlpha * (self::MAJOR_SEMIAX * self::MAJOR_SEMIAX - self::MINOR_SEMIAX * self::MINOR_SEMIAX) / (self::MINOR_SEMIAX * self::MINOR_SEMIAX);
         $A   = 1 + $uSq / 16384 * (4096 + $uSq * (-768 + $uSq * (320 - 175 * $uSq)));

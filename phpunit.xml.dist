@@ -8,26 +8,12 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
-         bootstrap="vendor/autoload.php"
->
+         syntaxCheck="true"
+         bootstrap="tests/bootstrap.php">
+
     <testsuites>
-        <testsuite name="Nerd CMS Test Suite">
-            <directory>./src/CMS/Tests</directory>
+        <testsuite name="Nerd CMS Unit Tests">
+            <directory>./tests/unit/</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory>./</directory>
-            <exclude>
-                <directory>./config</directory>
-                <directory>./public</directory>
-                <directory>./src</directory>
-                <directory>./storage</directory>
-                <directory>./tests</directory>
-                <directory>./vendor</directory>
-            </exclude>
-        </whitelist>
-    </filter>
 </phpunit>
