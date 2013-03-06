@@ -19,14 +19,14 @@ class City
      *
      * @var integer
 	 */
-	private $zip;
+	protected $zip;
 
     /**
      * @Column(type="string", length=50, nullable=false)
      * 
      * @var string
      */
-    private $city;
+    protected $city;
 
     /**
      * @ManyToOne(targetEntity="State", inversedBy="cities")
@@ -34,28 +34,28 @@ class City
      * 
      * @var State
      */
-    private $state;
+    protected $state;
 
     /**
      * @Column(type="string", length=50, nullable=false)
      * 
      * @var string
      */
-    private $county;
+    protected $county;
 
     /**
      * @Column(type="float", nullable=false)
      * 
      * @var float
      */
-    private $latitude;
+    protected $latitude;
 
     /**
      * @Column(type="float", nullable=false)
      * 
      * @var float
      */
-    private $longitude;
+    protected $longitude;
 
     /**
      * Returns entity zip code
@@ -67,7 +67,9 @@ class City
      */
     public function getZip()
     {
-        return $this->zip;
+        $zip = (string) $this->zip;
+
+        return isset($zip{5}) ? $this->zip : str_pad($this->zip, 5, '0', STR_PAD_LEFT);
     }
 
     /**
@@ -124,10 +126,6 @@ class City
      */
     public function setState($state)
     {
-        if (!$state instanceof State) {
-            throw new \InvalidArgumentException('Argument 1 must be an instance of CMS\Entity\State');
-        }
-
         $this->state = $state;
     }
 

@@ -911,39 +911,5 @@ class CodeGuy extends \Codeception\AbstractGuy
         }
         return new Maybe();
     }
-
- 
-    /**
-     *
-     * @see CodeHelper::startIgnoringErrors()
-     *
-     * ! This method is generated. DO NOT EDIT. !
-     * ! Documentation taken from corresponding module !
-     */
-    public function startIgnoringErrors() {
-        $this->scenario->action('startIgnoringErrors', func_get_args());
-        if ($this->scenario->running()) {
-            $result = $this->scenario->runStep();
-            return new Maybe($result);
-        }
-        return new Maybe();
-    }
-
- 
-    /**
-     *
-     * @see CodeHelper::stopIgnoringErrors()
-     *
-     * ! This method is generated. DO NOT EDIT. !
-     * ! Documentation taken from corresponding module !
-     */
-    public function stopIgnoringErrors() {
-        $this->scenario->action('stopIgnoringErrors', func_get_args());
-        if ($this->scenario->running()) {
-            $result = $this->scenario->runStep();
-            return new Maybe($result);
-        }
-        return new Maybe();
-    }
 }
 
