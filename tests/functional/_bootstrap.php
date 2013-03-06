@@ -1,2 +1,5 @@
 <?php
-// Here you can initialize variables that will for your tests
+
+$em = 'INITIALIZE ENTITY MANAGER!!';
+
+\Codeception\Module\Doctrine2::$em = $em;

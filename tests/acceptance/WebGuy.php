@@ -4,7 +4,7 @@
 // @codingStandardsIgnoreFile
 
 use Codeception\Maybe;
-use Codeception\Module\PhpBrowser;
+use Codeception\Module\Selenium2;
 use Codeception\Module\WebHelper;
 
 /**
@@ -25,51 +25,17 @@ class WebGuy extends \Codeception\AbstractGuy
 {
     
     /**
-     * Submits a form located on page.
-     * Specify the form by it's css or xpath selector.
-     * Fill the form fields values as array.
+     * Clicks on either link or button (for PHPBrowser) or on any selector for JS browsers.
+     * Link text or css selector can be passed.
      *
-     * Skipped fields will be filled by their values from page.
-     * You don't need to click the 'Submit' button afterwards.
-     * This command itself triggers the request to form's action.
-     *
-     * Examples:
-     *
-     * ``` php
-     * <?php
-     * $I->submitForm('#login', array('login' => 'davert', 'password' => '123456'));
-     *
-     * ```
-     *
-     * For sample Sign Up form:
-     *
-     * ``` html
-     * <form action="/sign_up">
-     *     Login: <input type="text" name="user[login]" /><br/>
-     *     Password: <input type="password" name="user[password]" /><br/>
-     *     Do you agree to out terms? <input type="checkbox" name="user[agree]" /><br/>
-     *     Select pricing plan <select name="plan"><option value="1">Free</option><option value="2" selected="selected">Paid</option></select>
-     *     <input type="submit" value="Submit" />
-     * </form>
-     * ```
-     * I can write this:
-     *
-     * ``` php
-     * <?php
-     * $I->submitForm('#userForm', array('user' => array('login' => 'Davert', 'password' => '123456', 'agree' => true)));
-     *
-     * ```
-     * Note, that pricing plan will be set to Paid, as it's selected on page.
-     *
-     * @param $selector
-     * @param $params
-     * @see PhpBrowser::submitForm()
+     * @param $link
+     * @see Selenium2::click()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
      */
-    public function submitForm($selector, $params) {
-        $this->scenario->action('submitForm', func_get_args());
+    public function click($link) {
+        $this->scenario->action('click', func_get_args());
         if ($this->scenario->running()) {
             $result = $this->scenario->runStep();
             return new Maybe($result);
@@ -79,31 +45,340 @@ class WebGuy extends \Codeception\AbstractGuy
 
  
     /**
-     * If your page triggers an ajax request, you can perform it manually.
-     * This action sends a POST ajax request with specified params.
-     * Additional params can be passed as array.
+     * Accept alert or confirm popup
+     *
+     * Example:
+     * ``` php
+     * <?php
+     * $I->click('Show alert popup');
+     * $I->acceptPopup();
+     *
+     * ```
+     * @see Selenium2::acceptPopup()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function acceptPopup() {
+        $this->scenario->action('acceptPopup', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Dismiss alert or confirm popup
+     *
+     * Example:
+     * ``` php
+     * <?php
+     * $I->click('Show confirm popup');
+     * $I->cancelPopup();
+     *
+     * ```
+     * @see Selenium2::cancelPopup()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function cancelPopup() {
+        $this->scenario->action('cancelPopup', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Checks if popup contains the $text
+     *
+     * Example:
+     * ``` php
+     * <?php
+     * $I->click('Show alert popup');
+     * $I->seeInPopup('Error message');
+     *
+     * ```
+     *
+     * @param string $text
+     * @see Selenium2::seeInPopup()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function seeInPopup($text) {
+        $this->scenario->assertion('seeInPopup', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Check if popup don't contains the $text
+     *
+     * Example:
+     * ``` php
+     * <?php
+     * $I->click();
+     * $I->dontSeeInPopup('Error message');
+     *
+     * ```
+     *
+     * @param string $text
+     * @see Selenium2::dontSeeInPopup()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function dontSeeInPopup($text) {
+        $this->scenario->action('dontSeeInPopup', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Switch to another window
+     *
+     * Example:
+     * ``` html
+     * <input type="button" value="Open window" onclick="window.open('http://example.com', 'another_window')">
+     *
+     * ```
+     *
+     * ``` php
+     * <?php
+     * $I->click("Open window");
+     * # switch to another window
+     * $I->switchToWindow("another_window");
+     * # switch to parent window
+     * $I->switchToWindow();
+     *
+     * ```
+     *
+     * @param string|null $name
+     * @see Selenium2::switchToWindow()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function switchToWindow($name = null) {
+        $this->scenario->action('switchToWindow', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Switch to another frame
+     *
+     * Example:
+     * ``` html
+     * <iframe name="another_frame" src="http://example.com">
+     *
+     * ```
+     *
+     * ``` php
+     * <?php
+     * # switch to iframe
+     * $I->switchToIFrame("another_frame");
+     * # switch to parent page
+     * $I->switchToIFrame();
+     *
+     * ```
+     *
+     * @param string|null $name
+     * @see Selenium2::switchToIFrame()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function switchToIFrame($name = null) {
+        $this->scenario->action('switchToIFrame', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Double clicks on link or button or any node found by CSS or XPath
+     *
+     * @param $link
+     * @see Selenium2::doubleClick()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function doubleClick($link) {
+        $this->scenario->action('doubleClick', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Clicks with right button on link or button or any node found by CSS or XPath
+     *
+     * @param $link
+     * @see Selenium2::clickWithRightButton()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function clickWithRightButton($link) {
+        $this->scenario->action('clickWithRightButton', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Moves mouse over link or button or any node found by CSS or XPath
+     *
+     * @param $link
+     * @see Selenium2::moveMouseOver()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function moveMouseOver($link) {
+        $this->scenario->action('moveMouseOver', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Moves focus to link or button or any node found by CSS or XPath
+     *
+     * @param $el
+     * @see Selenium2::focus()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function focus($el) {
+        $this->scenario->action('focus', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Removes focus from link or button or any node found by CSS or XPath
+     * XPath or CSS selectors are accepted.
+     *
+     * @param $el
+     * @see Selenium2::blur()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function blur($el) {
+        $this->scenario->action('blur', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Drag first element to second
+     * XPath or CSS selectors are accepted.
+     *
+     * @param $el1
+     * @param $el2
+     * @see Selenium2::dragAndDrop()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function dragAndDrop($el1, $el2) {
+        $this->scenario->action('dragAndDrop', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Checks element visibility.
+     * Fails if element exists but is invisible to user.
+     * Eiter CSS or XPath can be used.
+     *
+     * @param $selector
+     * @see Selenium2::seeElement()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function seeElement($selector) {
+        $this->scenario->assertion('seeElement', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Presses key on element found by css, xpath is focused
+     * A char and modifier (ctrl, alt, shift, meta) can be provided.
      *
      * Example:
      *
-     * Imagine that by clicking checkbox you trigger ajax request which updates user settings.
-     * We emulate that click by running this ajax request manually.
-     *
      * ``` php
      * <?php
-     * $I->sendAjaxPostRequest('/updateSettings', array('notifications' => true); // POST
-     * $I->sendAjaxGetRequest('/updateSettings', array('notifications' => true); // GET
-     *
+     * $I->pressKey('#page','u');
+     * $I->pressKey('#page','u','ctrl');
+     * $I->pressKey('descendant-or-self::*[@id='page']','u');
+     * ?>
      * ```
      *
-     * @param $uri
-     * @param $params
-     * @see PhpBrowser::sendAjaxPostRequest()
+     * @param $element
+     * @param $char char can be either char ('b') or char-code (98)
+     * @param null $modifier keyboard modifier (could be 'ctrl', 'alt', 'shift' or 'meta')
+     * @see Selenium2::pressKey()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
      */
-    public function sendAjaxPostRequest($uri, $params = null) {
-        $this->scenario->action('sendAjaxPostRequest', func_get_args());
+    public function pressKey($element, $char, $modifier = null) {
+        $this->scenario->action('pressKey', func_get_args());
         if ($this->scenario->running()) {
             $result = $this->scenario->runStep();
             return new Maybe($result);
@@ -113,20 +388,101 @@ class WebGuy extends \Codeception\AbstractGuy
 
  
     /**
-     * If your page triggers an ajax request, you can perform it manually.
-     * This action sends a GET ajax request with specified params.
+     * Presses key up on element found by CSS or XPath.
      *
-     * See ->sendAjaxPostRequest for examples.
+     * For example see 'pressKey'.
      *
-     * @param $uri
-     * @param $params
-     * @see PhpBrowser::sendAjaxGetRequest()
+     * @param $element
+     * @param $char char can be either char ('b') or char-code (98)
+     * @param null $modifier keyboard modifier (could be 'ctrl', 'alt', 'shift' or 'meta')
+     * @see Selenium2::pressKeyUp()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
      */
-    public function sendAjaxGetRequest($uri, $params = null) {
-        $this->scenario->action('sendAjaxGetRequest', func_get_args());
+    public function pressKeyUp($element, $char, $modifier = null) {
+        $this->scenario->action('pressKeyUp', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Presses key down on element found by CSS or XPath.
+     *
+     * For example see 'pressKey'.
+     *
+     * @param $element
+     * @param $char char can be either char ('b') or char-code (98)
+     * @param null $modifier keyboard modifier (could be 'ctrl', 'alt', 'shift' or 'meta')
+     * @see Selenium2::pressKeyDown()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function pressKeyDown($element, $char, $modifier = null) {
+        $this->scenario->action('pressKeyDown', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Wait for x milliseconds
+     *
+     * @param $milliseconds
+     * @see Selenium2::wait()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function wait($milliseconds) {
+        $this->scenario->action('wait', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Waits for x milliseconds or until JS condition turns true.
+     *
+     * @param $milliseconds
+     * @param $jsCondition
+     * @see Selenium2::waitForJS()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function waitForJS($milliseconds, $jsCondition) {
+        $this->scenario->action('waitForJS', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Executes any JS code.
+     *
+     * @param $jsCode
+     * @see Selenium2::executeJs()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function executeJs($jsCode) {
+        $this->scenario->action('executeJs', func_get_args());
         if ($this->scenario->running()) {
             $result = $this->scenario->runStep();
             return new Maybe($result);
@@ -139,7 +495,7 @@ class WebGuy extends \Codeception\AbstractGuy
      * Opens the page.
      *
      * @param $page
-     * @see PhpBrowser::amOnPage()
+     * @see Selenium2::amOnPage()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -169,7 +525,7 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * @param $text
      * @param null $selector
-     * @see PhpBrowser::dontSee()
+     * @see Selenium2::dontSee()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -200,7 +556,7 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * @param $text
      * @param null $selector
-     * @see PhpBrowser::see()
+     * @see Selenium2::see()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -230,7 +586,7 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * @param $text
      * @param null $url
-     * @see PhpBrowser::seeLink()
+     * @see Selenium2::seeLink()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -259,7 +615,7 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * @param $text
      * @param null $url
-     * @see PhpBrowser::dontSeeLink()
+     * @see Selenium2::dontSeeLink()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -275,47 +631,8 @@ class WebGuy extends \Codeception\AbstractGuy
 
  
     /**
-     * Perform a click on link or button.
-     * Link or button are found by their names or CSS selector.
-     * Submits a form if button is a submit type.
-     *
-     * If link is an image it's found by alt attribute value of image.
-     * If button is image button is found by it's value
-     * If link or button can't be found by name they are searched by CSS selector.
-     *
-     * Examples:
-     *
-     * ``` php
-     * <?php
-     * // simple link
-     * $I->click('Logout');
-     * // button of form
-     * $I->click('Submit');
-     * // CSS button
-     * $I->click('#form input[type=submit]');
-     * // XPath
-     * $I->click('//form/*[@type=submit]')
-     * ?>
-     * ```
-     * @param $link
-     * @see PhpBrowser::click()
-     *
-     * ! This method is generated. DO NOT EDIT. !
-     * ! Documentation taken from corresponding module !
-     */
-    public function click($link) {
-        $this->scenario->action('click', func_get_args());
-        if ($this->scenario->running()) {
-            $result = $this->scenario->runStep();
-            return new Maybe($result);
-        }
-        return new Maybe();
-    }
-
- 
-    /**
      * Reloads current page
-     * @see PhpBrowser::reloadPage()
+     * @see Selenium2::reloadPage()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -332,7 +649,7 @@ class WebGuy extends \Codeception\AbstractGuy
  
     /**
      * Moves back in history
-     * @see PhpBrowser::moveBack()
+     * @see Selenium2::moveBack()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -349,7 +666,7 @@ class WebGuy extends \Codeception\AbstractGuy
  
     /**
      * Moves forward in history
-     * @see PhpBrowser::moveForward()
+     * @see Selenium2::moveForward()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -369,7 +686,7 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * @param $field
      * @param $value
-     * @see PhpBrowser::fillField()
+     * @see Selenium2::fillField()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -399,7 +716,7 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * @param $select
      * @param $option
-     * @see PhpBrowser::selectOption()
+     * @see Selenium2::selectOption()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -427,7 +744,7 @@ class WebGuy extends \Codeception\AbstractGuy
      * ```
      *
      * @param $option
-     * @see PhpBrowser::checkOption()
+     * @see Selenium2::checkOption()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -454,7 +771,7 @@ class WebGuy extends \Codeception\AbstractGuy
      * ```
      *
      * @param $option
-     * @see PhpBrowser::uncheckOption()
+     * @see Selenium2::uncheckOption()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -473,7 +790,7 @@ class WebGuy extends \Codeception\AbstractGuy
      * Checks that current uri contains value
      *
      * @param $uri
-     * @see PhpBrowser::seeInCurrentUrl()
+     * @see Selenium2::seeInCurrentUrl()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -502,7 +819,7 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * @param $field
      * @param $filename
-     * @see PhpBrowser::attachFile()
+     * @see Selenium2::attachFile()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -532,7 +849,7 @@ class WebGuy extends \Codeception\AbstractGuy
      * ```
      *
      * @param $checkbox
-     * @see PhpBrowser::seeCheckboxIsChecked()
+     * @see Selenium2::seeCheckboxIsChecked()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -561,7 +878,7 @@ class WebGuy extends \Codeception\AbstractGuy
      * ```
      *
      * @param $checkbox
-     * @see PhpBrowser::dontSeeCheckboxIsChecked()
+     * @see Selenium2::dontSeeCheckboxIsChecked()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -594,7 +911,7 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * @param $field
      * @param $value
-     * @see PhpBrowser::seeInField()
+     * @see Selenium2::seeInField()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -626,7 +943,7 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * @param $field
      * @param $value
-     * @see PhpBrowser::dontSeeInField()
+     * @see Selenium2::dontSeeInField()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -657,7 +974,7 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * @param $cssOrXPathOrRegex
      * @return mixed
-     * @see PhpBrowser::grabTextFrom()
+     * @see Selenium2::grabTextFrom()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -688,7 +1005,7 @@ class WebGuy extends \Codeception\AbstractGuy
      *
      * @param $field
      * @return mixed
-     * @see PhpBrowser::grabValueFrom()
+     * @see Selenium2::grabValueFrom()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !
@@ -705,7 +1022,7 @@ class WebGuy extends \Codeception\AbstractGuy
  
     /**
      *
-     * @see PhpBrowser::grabAttribute()
+     * @see Selenium2::grabAttribute()
      *
      * ! This method is generated. DO NOT EDIT. !
      * ! Documentation taken from corresponding module !

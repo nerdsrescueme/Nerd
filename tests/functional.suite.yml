@@ -8,4 +8,8 @@
 
 class_name: TestGuy
 modules:
-    enabled: [Filesystem, TestHelper]
+    enabled: [Filesystem, Doctrine2, TestHelper]
+    config:
+        Doctrine2:
+            auto_connect: false
+            cleanup: true

@@ -5,6 +5,7 @@
 
 use Codeception\Maybe;
 use Codeception\Module\Filesystem;
+use Codeception\Module\Doctrine2;
 use Codeception\Module\TestHelper;
 
 /**
@@ -238,6 +239,171 @@ class TestGuy extends \Codeception\AbstractGuy
      */
     public function seeFileFound($filename, $path = null) {
         $this->scenario->assertion('seeFileFound', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Performs $em->flush();
+     * @see Doctrine2::flushToDatabase()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function flushToDatabase() {
+        $this->scenario->action('flushToDatabase', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Adds entity to repository and flushes. You can redefine it's properties with the second parameter.
+     *
+     * Example:
+     *
+     * ``` php
+     * <?php
+     * $I->persistEntity($user, array('name' => 'Miles'));
+     * ```
+     *
+     * @param $obj
+     * @param array $values
+     * @see Doctrine2::persistEntity()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function persistEntity($obj, $values = null) {
+        $this->scenario->action('persistEntity', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Mocks the repository.
+     *
+     * With this action you can redefine any method of any repository.
+     * Please, note: this fake repositories will be accessible through entity manager till the end of test.
+     *
+     * Example:
+     *
+     * ``` php
+     * <?php
+     *
+     * $I->haveFakeRepository('Entity\User', array('findByUsername' => function($username) {  return null; }));
+     *
+     * ```
+     *
+     * This creates a stub class for Entity\User repository with redefined method findByUsername, which will always return the NULL value.
+     *
+     * @param $classname
+     * @param array $methods
+     * @see Doctrine2::haveFakeRepository()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function haveFakeRepository($classname, $methods = null) {
+        $this->scenario->action('haveFakeRepository', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Flushes changes to database executes a query defined by array.
+     * It builds query based on array of parameters.
+     * You can use entity associations to build complex queries.
+     *
+     * Example:
+     *
+     * ``` php
+     * <?php
+     * $I->seeInRepository('User', array('name' => 'davert'));
+     * $I->seeInRepository('User', array('name' => 'davert', 'Company' => array('name' => 'Codegyre')));
+     * $I->seeInRepository('Client', array('User' => array('Company' => array('name' => 'Codegyre')));
+     * ?>
+     * ```
+     *
+     * Fails if record for given criteria can\'t be found,
+     *
+     * @param $entity
+     * @param array $params
+     * @see Doctrine2::seeInRepository()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function seeInRepository($entity, $params = null) {
+        $this->scenario->assertion('seeInRepository', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Flushes changes to database and performs ->findOneBy() call for current repository.
+     *
+     * @param $entity
+     * @param array $params
+     * @see Doctrine2::dontSeeInRepository()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function dontSeeInRepository($entity, $params = null) {
+        $this->scenario->action('dontSeeInRepository', func_get_args());
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * Selects field value from repository.
+     * It builds query based on array of parameters.
+     * You can use entity associations to build complex queries.
+     *
+     * Example:
+     *
+     * ``` php
+     * <?php
+     * $email = $I->grabFromRepository('User', 'email', array('name' => 'davert'));
+     * ?>
+     * ```
+     *
+     * @version 1.1
+     * @param $entity
+     * @param $field
+     * @param array $params
+     * @return array
+     * @see Doctrine2::grabFromRepository()
+     *
+     * ! This method is generated. DO NOT EDIT. !
+     * ! Documentation taken from corresponding module !
+     */
+    public function grabFromRepository($entity, $field, $params = null) {
+        $this->scenario->action('grabFromRepository', func_get_args());
         if ($this->scenario->running()) {
             $result = $this->scenario->runStep();
             return new Maybe($result);

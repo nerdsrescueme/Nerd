@@ -10,9 +10,8 @@
 
 class_name: WebGuy
 modules:
-    enabled:
-        - PhpBrowser
-        - WebHelper
+    enabled: [Selenium2, WebHelper]
     config:
-        PhpBrowser:
-            url: 'http://localhost/myapp/'
+        Selenium2:
+            url: http://nerd.dev
+            browser: firefox

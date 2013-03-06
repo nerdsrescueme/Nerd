@@ -6,7 +6,6 @@
 use Codeception\Maybe;
 use Codeception\Module\Unit;
 use Codeception\Module\Filesystem;
-use Codeception\Module\CodeHelper;
 
 /**
  * Inherited methods
@@ -22,7 +21,7 @@ use Codeception\Module\CodeHelper;
  * @method void lookForwardTo($role)
 */
 
-class CodeGuy extends \Codeception\AbstractGuy
+class IntegratorGuy extends \Codeception\AbstractGuy
 {
     
     /**
@@ -905,40 +904,6 @@ class CodeGuy extends \Codeception\AbstractGuy
      */
     public function seeFileFound($filename, $path = null) {
         $this->scenario->assertion('seeFileFound', func_get_args());
-        if ($this->scenario->running()) {
-            $result = $this->scenario->runStep();
-            return new Maybe($result);
-        }
-        return new Maybe();
-    }
-
- 
-    /**
-     *
-     * @see CodeHelper::startIgnoringErrors()
-     *
-     * ! This method is generated. DO NOT EDIT. !
-     * ! Documentation taken from corresponding module !
-     */
-    public function startIgnoringErrors() {
-        $this->scenario->action('startIgnoringErrors', func_get_args());
-        if ($this->scenario->running()) {
-            $result = $this->scenario->runStep();
-            return new Maybe($result);
-        }
-        return new Maybe();
-    }
-
- 
-    /**
-     *
-     * @see CodeHelper::stopIgnoringErrors()
-     *
-     * ! This method is generated. DO NOT EDIT. !
-     * ! Documentation taken from corresponding module !
-     */
-    public function stopIgnoringErrors() {
-        $this->scenario->action('stopIgnoringErrors', func_get_args());
         if ($this->scenario->running()) {
             $result = $this->scenario->runStep();
             return new Maybe($result);
