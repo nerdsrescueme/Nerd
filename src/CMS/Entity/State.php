@@ -37,7 +37,7 @@ class State
 
     public function setCode($code)
     {
-        $this->code = $code;
+        $this->code = trim((string) $code);
     }
 
     public function getName()
@@ -47,11 +47,21 @@ class State
 
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = trim((string) $name);
     }
 
     public function getCities()
     {
         return $this->cities;
+    }
+
+    /**
+     * Return string equivalent of this object
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return __CLASS__.'['.$this->getCode().']';
     }
 }

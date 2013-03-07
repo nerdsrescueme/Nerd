@@ -16,14 +16,14 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'getZip', ['zip' => 19134]));
         $I->executeTestedMethodOn($city);
 
-        $I->expect('method to return integer 19134')
+        $I->expect('->getZip() to return an integer')
           ->seeResultEquals(19134)
           ->seeResultIs('int');
 
         $I->changeProperty($city, 'zip', 8093);
         $I->executeTestedMethodOn($city);
 
-        $I->expect('method to return string "08093" when value could be mistaken for octal number')
+        $I->expect('->getZip() to return a string when integer could be mistaken for octal number')
           ->seeResultEquals('08093')
           ->seeResultIs('string');
     }
@@ -34,7 +34,7 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'setZip'));
         $I->executeTestedMethodOn($city, 19134);
 
-        $I->expect('method to set value and return null')
+        $I->expect('->setZip() to set integer and return null')
           ->seePropertyEquals($city, 'zip', 19134)
           ->seeResultIs(null);
     }
@@ -45,7 +45,7 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'getCity', ['city' => 'value']));
         $I->executeTestedMethodOn($city);
 
-        $I->expect('method to return a string value')
+        $I->expect('->getCity() to return a string')
           ->seeResultEquals('value')
           ->seeResultIs('string');
     }
@@ -56,7 +56,7 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'setCity'));
         $I->executeTestedMethodOn($city, 'value');
 
-        $I->expect('method to set value and return null')
+        $I->expect('->setCity() to set string and return null')
           ->seePropertyEquals($city, 'city', 'value')
           ->seeResultIs(null);
     }
@@ -68,12 +68,11 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'getState', ['state' => $state]));
         $I->executeTestedMethodOn($city);
 
-        $I->expect('method to return state object')
+        $I->expect('->getState() to return state object')
           ->seePropertyEquals($city, 'state', $state)
           ->seeResultEquals('value')
           ->seeResultIs('object');
     }
-
 
     public function setState(\CodeGuy $I)
     {
@@ -82,7 +81,7 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'setState'));
         $I->executeTestedMethodOn($city, $state);
 
-        $I->expect("method to set value and return null")
+        $I->expect("->setState() to set an object and return null")
           ->seePropertyEquals($city, 'state', $state)
           ->seeResultIs(null);
     }
@@ -93,7 +92,7 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'getCounty', ['county' => 'value']));
         $I->executeTestedMethodOn($city);
 
-        $I->expect('method to return a string value')
+        $I->expect('->getCounty() to return a string')
           ->seeResultEquals('value')
           ->seeResultIs('string');
     }
@@ -104,7 +103,7 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'setCounty'));
         $I->executeTestedMethodOn($city, 'value');
 
-        $I->expect('method to set value and return null')
+        $I->expect('->setCounty() to set a string and return null')
           ->seePropertyEquals($city, 'county', 'value')
           ->seeResultIs(null);
     }
@@ -115,7 +114,7 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'getLatitude', ['latitude' => self::VALID_FLOAT]));
         $I->executeTestedMethodOn($city);
 
-        $I->expect('method to return float '.self::VALID_FLOAT)
+        $I->expect('->getLatitude() to return float')
           ->seeResultEquals(self::VALID_FLOAT)
           ->seeResultIs('float');
     }
@@ -126,7 +125,7 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'getRadianLatitude', ['latitude' => self::VALID_FLOAT]));
         $I->executeTestedMethodOn($city);
 
-        $I->expect('method to return float 0.2154608961587')
+        $I->expect('->getRadianLatitude() to return the radian equivalent of latitude float')
           ->seeResultEquals(deg2rad(self::VALID_FLOAT))
           ->seeResultIs('float');
     }
@@ -137,7 +136,7 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'setLatitude'));
         $I->executeTestedMethodOn($city, self::VALID_FLOAT);
 
-        $I->expect('method to set value and return null')
+        $I->expect('->setLatitude() to set float and return null')
           ->seePropertyEquals($city, 'latitude', self::VALID_FLOAT)
           ->seeResultIs(null);
     }
@@ -148,7 +147,7 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'getLongitude', ['longitude' => self::VALID_FLOAT]));
         $I->executeTestedMethodOn($city);
 
-        $I->expect('method to return float '.self::VALID_FLOAT)
+        $I->expect('->getLongitude() to return a float')
           ->seeResultEquals(self::VALID_FLOAT)
           ->seeResultIs('float');
     }
@@ -159,7 +158,7 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'getRadianLongitude', ['longitude' => self::VALID_FLOAT]));
         $I->executeTestedMethodOn($city);
 
-        $I->expect('method to return float 0.2154608961587')
+        $I->expect('->getRadianLongitude() to return the radian equivalent of longitude float')
           ->seeResultEquals(deg2rad(self::VALID_FLOAT))
           ->seeResultIs('float');
     }
@@ -170,8 +169,39 @@ class CityCest
         $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'setLongitude'));
         $I->executeTestedMethodOn($city, self::VALID_FLOAT);
 
-        $I->expect('method to set value and return null')
+        $I->expect('->setLongitude() to set float and return null')
           ->seePropertyEquals($city, 'longitude', self::VALID_FLOAT)
           ->seeResultIs(null);
+    }
+
+    public function getCoordinates(\CodeGuy $I)
+    {
+        $expected = ['latitude' => self::VALID_FLOAT, 'longitude' => self::VALID_FLOAT + 1];
+
+        $I->amTesting('City.getCoordinates');
+        $I->haveStub($city = Stub::makeEmptyExcept($this->class, 'getCoordinates', $expected));
+        $I->executeTestedMethodOn($city);
+
+        /* Cannot currently test due to Array to string conversion errors...
+
+        $I->expect('->getCoordinates() to return associative array with set values')
+          ->seeResultEquals($expected)
+          ->seeResultIs('array');
+
+        $I->expect('->getCoordinates(false) to return [<latitude>, <longitude>]')
+          ->seeResultEquals([self::VALID_FLOAT, self::VALID_FLOAT + 1])
+          ->seeResultIs('array');
+        */
+    }
+
+    public function stringConversion(\CodeGuy $I)
+    {
+        $I->amTesting('City.__toString');
+        $I->haveStub($city = Stub::make($this->class, ['zip' => 11111]));
+        $I->executeTestedMethodOn($city);
+
+        $I->expect('->__toString() to return a string with format CMS\Entity\City[<zip>]')
+          ->seeResultEquals('CMS\Entity\City[11111]')
+          ->seeResultIs('string');
     }
 }

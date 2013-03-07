@@ -10,3 +10,13 @@ settings:
     silent: false
     memory_limit: 1024M
     error_level: E_ALL
+coverage:
+    enabled: true
+    whitelist:
+        include:
+            - src/*
+        exclude:
+            - src/Twig/*
+    blacklist:
+        include:
+            - vendor/*

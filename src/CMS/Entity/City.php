@@ -229,4 +229,14 @@ class City
             ? ['latitude' => $this->getLatitude(), 'longitude' => $this->getLongitude()]
             : [$this->getLatitude(), $this->getLongitude()];
     }
+
+    /**
+     * Return string equivalent of this object
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return __CLASS__.'['.$this->getZip().']';
+    }
 }
