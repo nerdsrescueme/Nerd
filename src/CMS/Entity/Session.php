@@ -2,32 +2,36 @@
 
 namespace CMS\Entity;
 
+use Gedmo\Mapping\Annotation as Ext;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * @Entity(repositoryClass="CMS\Entity\Repository\SessionRepository")
- * @Table(name="nerd_sessions")
+ * @ORM\Entity(repositoryClass="CMS\Entity\Repository\SessionRepository")
+ * @ORM\Table(name="nerd_sessions")
  */
 class Session
 {
 	/**
-	 * @Id
-	 * @Column(type="string", length=50, nullable=true)
+	 * @ORM\Id
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 */
-	private $id;
+	protected $id;
 
 	/**
-	 * @Column(type="string", nullable=false)
+	 * @ORM\Column(type="string", nullable=false)
 	 */
-	private $data;
+	protected $data;
 
 	/**
-	 * @Column(name="created_at", type="datetime", nullable=true)
+	 * @ORM\Column(name="created_at", type="datetime", nullable=true)
 	 */
-	private $createdAt;
+	protected $createdAt;
 
 	/**
-	 * @Column(name="updated_at", type="datetime", nullable=true)
+	 * @ORM\Column(name="updated_at", type="datetime", nullable=true)
 	 */
-	private $updatedAt;
+	protected $updatedAt;
 
 
 	public function getId()

@@ -2,9 +2,13 @@
 
 namespace CMS\Entity;
 
+use Gedmo\Mapping\Annotation as Ext;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * @Entity
- * @Table(name="nerd_regions")
+ * @ORM\Entity
+ * @ORM\Table(name="nerd_regions")
  */
 class Region
 {
@@ -12,17 +16,17 @@ class Region
 	use Traits\Regioned;
 
 	/**
-	 * @Id
-	 * @Column(type="integer", scale=8, nullable=false)
-	 * @GeneratedValue
+	 * @ORM\Id
+	 * @ORM\Column(type="integer", scale=8, nullable=false)
+	 * @ORM\GeneratedValue
 	 */
-	private $id;
+	protected $id;
 
 	/**
 	 * Overload trait default property
 	 * 
-	 * @ManyToOne(targetEntity="Page", inversedBy="regions")
-	 * @JoinColumn(name="page_id", referencedColumnName="id")
+	 * @ORM\ManyToOne(targetEntity="Page", inversedBy="regions")
+	 * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
 	 */
-	private $page;
+	protected $page;
 }

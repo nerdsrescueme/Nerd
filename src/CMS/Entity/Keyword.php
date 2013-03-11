@@ -3,29 +3,32 @@
 namespace CMS\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Ext;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Entity
- * @Table(name="nerd_keywords")
+ * @ORM\Entity
+ * @ORM\Table(name="nerd_keywords")
  */
 class Keyword
 {
     /**
-	 * @Id
-	 * @Column(type="integer", scale=11, nullable=false)
-	 * @GeneratedValue
+	 * @ORM\Id
+	 * @ORM\Column(type="integer", scale=11, nullable=false)
+	 * @ORM\GeneratedValue
 	 */
-	private $id;
+	protected $id;
 
     /**
-     * @Column(type="string", length=32, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=32, nullable=false, unique=true)
      */
-    private $keyword;
+    protected $keyword;
 
     /**
-     * @ManyToMany(targetEntity="Page", mappedBy="keywords")
+     * @ORM\ManyToMany(targetEntity="Page", mappedBy="keywords")
      */
-    private $pages;
+    protected $pages;
 
 
     public function __construct()

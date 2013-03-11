@@ -7,15 +7,15 @@ use CMS\Entity\User;
 trait Usered
 {
 	/**
-     * @Column(name="user_id", type="integer", scale=5, nullable=false)
+     * @ORM\Column(name="user_id", type="integer", scale=5, nullable=false)
      */
-    private $userId;
+    protected $userId;
 
     /**
-     * @ManyToOne(targetEntity="User")
-     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $user;
+    protected $user;
 
     /**
      * Returns associated user id

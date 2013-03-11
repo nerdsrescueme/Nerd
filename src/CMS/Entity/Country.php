@@ -12,22 +12,22 @@ class Country
 	 * @Id
 	 * @Column(type="string", length=2, nullable=false)
 	 */
-	private $short;
+	protected $short;
 
     /**
      * @Column(type="string", length=3, nullable=false)
      */
-    private $long;
+    protected $long;
 
     /**
      * @Column(type="integer", scale=3, nullable=false)
      */
-    private $numeric;
+    protected $numeric;
 
     /**
      * @Column(type="string", length=50, nullable=false)
      */
-    private $name;
+    protected $name;
 
 
     public function getShort()

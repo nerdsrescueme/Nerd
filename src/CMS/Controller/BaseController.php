@@ -47,6 +47,11 @@ abstract class BaseController implements ControllerInterface
 		return $this->page;
 	}
 
+	public function getValidator()
+	{
+		return $this->app['validator'];
+	}
+
 	public function getData($key = null)
 	{
 		return $key ? $this->data[$key] : $this->data;

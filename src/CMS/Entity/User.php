@@ -6,10 +6,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Secs\UserInterface;
 use Secs\RoleInterface;
 use Secs\PermissionInterface;
+use Gedmo\Mapping\Annotation as Ext;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Entity(repositoryClass="CMS\Entity\Repository\UserRepository")
- * @Table(name="nerd_users")
+ * @ORM\Entity(repositoryClass="CMS\Entity\Repository\UserRepository")
+ * @ORM\Table(name="nerd_users")
  */
 class User implements UserInterface
 {
@@ -26,95 +29,95 @@ class User implements UserInterface
     const LEVEL_BANNED = 'banned';
 
     /**
-     * @Id
-     * @Column(type="integer", scale=5, nullable=false)
-     * @GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer", scale=5, nullable=false)
+     * @ORM\GeneratedValue
      */
-    private $id;
+    protected $id;
 
     /**
-     * @Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
-    private $super = false;
+    protected $super = false;
 
     /**
-     * @Column(type="string", length=32, nullable=false)
+     * @ORM\Column(type="string", length=32, nullable=false)
      */
-    private $username;
+    protected $username;
 
     /**
-     * @Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $email;
+    protected $email;
 
     /**
-     * @Column(type="string", length=81, nullable=false)
+     * @ORM\Column(type="string", length=81, nullable=false)
      */
-    private $password;
+    protected $password;
 
     /**
-     * @Column(name="salt", type="string", length=81, nullable=true)
+     * @ORM\Column(name="salt", type="string", length=81, nullable=true)
      */
-    private $salt;
+    protected $salt;
 
     /**
-     * @Column(name="temp_password", type="string", length=81, nullable=true)
+     * @ORM\Column(name="temp_password", type="string", length=81, nullable=true)
      */
-    private $tempPassword;
+    protected $tempPassword;
 
     /**
-     * @Column(type="string", length=81, nullable=true)
+     * @ORM\Column(type="string", length=81, nullable=true)
      */
-    private $remember;
+    protected $remember;
 
     /**
-     * @Column(name="activation_hash", type="string", length=81, nullable=true)
+     * @ORM\Column(name="activation_hash", type="string", length=81, nullable=true)
      */
-    private $activationHash;
+    protected $activationHash;
 
     /**
-     * @Column(type="string", length=45, nullable=false)
+     * @ORM\Column(type="string", length=45, nullable=false)
      */
-    private $ip;
+    protected $ip;
 
     /**
-     * @Column(name="last_login", type="datetime", nullable=false)
+     * @ORM\Column(name="last_login", type="datetime", nullable=false)
      */
-    private $lastLogin;
+    protected $lastLogin;
 
     /**
-     * @Column(type="string", length=16, nullable=false)
+     * @ORM\Column(type="string", length=16, nullable=false)
      */
-    private $status = self::STATUS_DEFAULT;
+    protected $status = self::STATUS_DEFAULT;
 
     /**
-     * @Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
-    private $activated = false;
+    protected $activated = false;
 
     /**
-     * @Column(name="created_at", type="datetime", nullable=false)
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
-     * @Column(name="updated_at", type="datetime", nullable=false)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     /**
-     * @OneToOne(targetEntity="CMS\Entity\User\Metadata")
-     * @JoinColumn(name="id", referencedColumnName="user_id")
+     * @ORM\OneToOne(targetEntity="CMS\Entity\User\Metadata")
+     * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
-    private $metadata;
+    protected $metadata;
 
     /**
-     * @ManyToMany(targetEntity="Role", inversedBy="users")
-     * @JoinTable(name="nerd_users_roles")
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @ORM\JoinTable(name="nerd_users_roles")
      */
-    private $roles;
+    protected $roles;
 
-    private $permissionsCache;
+    protected $permissionsCache;
 
     public function __construct()
     {

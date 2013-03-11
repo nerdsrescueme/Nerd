@@ -4,11 +4,12 @@ namespace CMS\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Ext;
-use Doctrine\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Entity(repositoryClass="CMS\Entity\Repository\PageRepository")
- * @Table(name="nerd_pages")
+ * @ORM\Entity(repositoryClass="CMS\Entity\Repository\PageRepository")
+ * @ORM\Table(name="nerd_pages")
  */
 class Page
 {
@@ -27,80 +28,80 @@ class Page
     const FREQ_NEVER   = 'never';
 
     /**
-     * @Id
-     * @Column(type="integer", scale=8, nullable=false)
-     * @GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer", scale=8, nullable=false)
+     * @ORM\GeneratedValue
      */
-    private $id;
+    protected $id;
 
     /**
      * Injected site property for trait
      * 
-     * @ManyToOne(targetEntity="Site", inversedBy="pages")
-     * @JoinColumn(name="site_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Site", inversedBy="pages")
+     * @ORM\JoinColumn(name="site_id", referencedColumnName="id")
      */
-    private $site;
+    protected $site;
 
     /**
-     * @Column(type="string", length=32, nullable=false)
+     * @ORM\Column(type="string", length=32, nullable=false)
      */
-    private $layout = 'default';
+    protected $layout = 'default';
 
     /**
-     * @Column(type="string", length=160, nullable=false)
+     * @ORM\Column(type="string", length=160, nullable=false)
      */
-    private $title;
+    protected $title;
 
     /**
-     * @Column(type="string", length=160, nullable=true)
+     * @ORM\Column(type="string", length=160, nullable=true)
      */
-    private $subtitle;
+    protected $subtitle;
 
     /**
-     * @Column(type="string", length=200, nullable=false, unique=true)
+     * @ORM\Column(type="string", length=200, nullable=false, unique=true)
      */
-    private $uri;
+    protected $uri;
 
     /**
-     * @Column(type="string", length=200, nullable=true)
+     * @ORM\Column(type="string", length=200, nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
-     * @Column(type="string", length=16, nullable=true)
+     * @ORM\Column(type="string", length=16, nullable=true)
      */
-    private $status = 'one';
+    protected $status = 'one';
 
     /**
-     * @Column(type="integer", scale=2, nullable=false)
+     * @ORM\Column(type="integer", scale=2, nullable=false)
      */
-    private $priority = 5;
+    protected $priority = 5;
 
     /**
-     * @Column(name="change_frequency", type="string", length=16, nullable=true)
+     * @ORM\Column(name="change_frequency", type="string", length=16, nullable=true)
      */
-    private $changeFrequency = self::FREQ_DEFAULT;
+    protected $changeFrequency = self::FREQ_DEFAULT;
 
     /**
-     * @ManyToMany(targetEntity="Keyword", inversedBy="page")
-     * @JoinTable(name="nerd_page_keywords")
+     * @ORM\ManyToMany(targetEntity="Keyword", inversedBy="page")
+     * @ORM\JoinTable(name="nerd_page_keywords")
      */
-    private $keywords;
+    protected $keywords;
 
     ///**
-    // * @OneToMany(targetEntity="Component", mappedBy="page")
+    // * @ORM\OneToMany(targetEntity="Component", mappedBy="page")
     // */
-    //private $components;
+    //protected $components;
 
     /**
-     * @OneToMany(targetEntity="Region", mappedBy="page")
+     * @ORM\OneToMany(targetEntity="Region", mappedBy="page")
      */
-    private $regions;
+    protected $regions;
 
     ///**
-    // * @OneToMany(targetEntity="Snippet", mappedBy="page")
+    // * @ORM\OneToMany(targetEntity="Snippet", mappedBy="page")
     // */
-    //private $snippets;
+    //protected $snippets;
 
     public function __construct()
     {

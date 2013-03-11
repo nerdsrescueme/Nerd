@@ -7,9 +7,9 @@ use CMS\Entity\Site;
 trait Sited
 {
 	/**
-     * @Column(name="site_id", type="integer", scale=2, nullable=false)
+     * @ORM\Column(name="site_id", type="integer", scale=2, nullable=false)
      */
-    private $siteId;
+    protected $siteId;
 
     /**
      * Returns associated site id

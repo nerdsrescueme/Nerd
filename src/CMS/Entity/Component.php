@@ -16,7 +16,7 @@ class Component
 	 * @Column(type="integer", scale=8, nullable=false)
 	 * @GeneratedValue
 	 */
-	private $id;
+	protected $id;
 
 	/**
 	 * Overload trait default property
@@ -24,5 +24,5 @@ class Component
 	 * @ManyToOne(targetEntity="Page", inversedBy="components")
 	 * @JoinColumn(name="page_id", referencedColumnName="id")
 	 */
-	private $page;
+	protected $page;
 }

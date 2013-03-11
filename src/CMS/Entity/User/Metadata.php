@@ -2,32 +2,36 @@
 
 namespace CMS\Entity\User;
 
+use Gedmo\Mapping\Annotation as Ext;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * @Entity
- * @Table(name="nerd_user_metadata")
+ * @ORM\Entity
+ * @ORM\Table(name="nerd_user_metadata")
  */
 class Metadata
 {
     /**
-	 * @Id
-	 * @Column(name="user_id", type="integer", scale=5, nullable=false)
+	 * @ORM\Id
+	 * @ORM\Column(name="user_id", type="integer", scale=5, nullable=false)
 	 */
-	private $userId;
+	protected $userId;
 
     /**
-     * @Column(name="first_name", type="string", length=36, nullable=true)
+     * @ORM\Column(name="first_name", type="string", length=36, nullable=true)
      */
-    private $firstName;
+    protected $firstName;
 
     /**
-     * @Column(name="last_name", type="string", length=36, nullable=true)
+     * @ORM\Column(name="last_name", type="string", length=36, nullable=true)
      */
-    private $lastName;
+    protected $lastName;
 
     /**
-     * @Column(type="integer", length=5, nullable=true)
+     * @ORM\Column(type="integer", length=5, nullable=true)
      */
-    private $zip;
+    protected $zip;
 
 
     public function getFirstName()

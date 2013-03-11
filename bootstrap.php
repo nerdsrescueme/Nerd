@@ -1,21 +1,25 @@
 <?php
 
 use CMS\Application;
+use CMS\CmsSessionHandler;
+use CMS\Event\PageEvent;
 use Monolog\Logger;
 use Monolog\Handler\SyslogHandler;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Configuration;
-use Doctrine\Common\Cache\ApcCache;
-use Doctrine\Common\Cache\ArrayCache;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\Validator\Validation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use CMS\CmsSessionHandler;
-use CMS\Event\PageEvent;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Configuration;
+use Doctrine\Common\Cache\ApcCache;
+use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\Event;
+use Doctrine\Common\Annotations\CachedReader;
+use Doctrine\Common\Annotations\IndexedReader;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Aura\Router\Map as RouterMap;
 use Aura\Router\DefinitionFactory as RouterDefinitionFactory;
 use Aura\Router\RouteFactory as RouterRouteFactory;
@@ -147,24 +151,25 @@ $app['cache'] = $app->share(function() use ($app, $env) {
 $app['db'] = $app->share(function() use ($app, $env) {
 
     // Register Annotation directories for Doctrine
-    //AnnotationRegistry::registerAutoloadNamespace('Symfony\Component\Validation\Constraints', __DIR__.'/vendor/symfony/validator');
+    AnnotationRegistry::registerAutoloadNamespace('Symfony\Component\Validator\Constraints', __DIR__.'/vendor/symfony/validator');
     AnnotationRegistry::registerAutoloadNamespace('Doctrine\ORM\Mapping', __DIR__.'/vendor/doctrine/orm/lib');
     AnnotationRegistry::registerAutoloadNamespace('Gedmo\Mapping\Annotation', __DIR__.'/vendor/gedmo/doctrine-extensions/lib');
 
     $cache = $app['cache'];
+    $reader = new CachedReader(new IndexedReader(new AnnotationReader), $cache);
     $config = new Configuration;
+    $driver = new Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, __DIR__.'/src/CMS/Entity');
+
     $config->setMetadataCacheImpl($cache);
-    $driverImpl = $config->newDefaultAnnotationDriver(__DIR__.'/src/CMS/Entity');
-    $config->setMetadataDriverImpl($driverImpl);
+    $config->setMetadataDriverImpl($driver);
     $config->setQueryCacheImpl($cache);
     $config->setResultCacheImpl($cache);
     $config->setProxyDir(__DIR__.'/storage/proxies');
     $config->setProxyNamespace('CMS\Proxies');
     $config->setAutoGenerateProxyClasses($env !== Application::ENV_PRODUCTION);
     $app['db.config'] = $config;
-    $connectionOptions = require 'config/db.php';
 
-    return EntityManager::create($connectionOptions, $config);
+    return EntityManager::create(require 'config/db.php', $config);
 });
 
 $app['db.page'] = $app->share(function() use ($app) {
@@ -236,6 +241,12 @@ $app['tpl'] = $app->share(function() use ($app, $env) {
     $twig->addGlobal('debugging', $isDebug);
 
     return $twig;
+});
+
+$app['validator'] = $app->share(function() use ($app) {
+    return Validation::createValidatorBuilder()
+        ->enableAnnotationMapping()
+        ->getValidator();
 });
 
 

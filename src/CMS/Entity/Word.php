@@ -12,7 +12,7 @@ class Word
      * @Id
      * @Column(type="string", length=32, nullable=false)
      */
-    private $word;
+    protected $word;
 
     public function getWord()
     {

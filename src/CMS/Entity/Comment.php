@@ -19,27 +19,27 @@ class Comment
      * @Column(type="integer", scale=10, nullable=false)
      * @GeneratedValue
      */
-	private $id;
+	protected $id;
 
     /**
      * @Column(name="type_id", type="integer", scale=2, nullable=false)
      */
-    private $typeId;
+    protected $typeId;
 
     /**
      * @Column(name="parent_id", type="integer", scale=10, nullable=false)
      */
-    private $parentId;
+    protected $parentId;
 
     /**
      * @Column(type="string", length=16, nullable=true)
      */
-    private $status = 'one';
+    protected $status = 'one';
 
     /**
      * @Column(type="text", nullable=false)
      */
-    private $data;
+    protected $data;
 
     public function getTypeId()
     {

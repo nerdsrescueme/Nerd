@@ -12,17 +12,17 @@ class State
 	 * @Id
 	 * @Column(type="string", length=2, nullable=false)
 	 */
-	private $code;
+	protected $code;
 
     /**
      * @OneToMany(targetEntity="City", mappedBy="stateObject")
      */
-    private $cities;
+    protected $cities;
 
     /**
      * @Column(type="string", length=32, nullable=false, unique=true)
      */
-    private $name;
+    protected $name;
 
 
 	public function __construct()

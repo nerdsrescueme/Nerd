@@ -5,40 +5,43 @@ namespace CMS\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Secs\RoleInterface;
 use Secs\PermissionInterface;
+use Gedmo\Mapping\Annotation as Ext;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Entity(repositoryClass="CMS\Entity\Repository\RoleRepository")
- * @Table(name="nerd_roles")
+ * @ORM\Entity(repositoryClass="CMS\Entity\Repository\RoleRepository")
+ * @ORM\Table(name="nerd_roles")
  */
 class Role implements RoleInterface
 {
     /**
-     * @Id
-     * @Column(type="integer", scale=4, nullable=false)
-     * @GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer", scale=4, nullable=false)
+     * @ORM\GeneratedValue
      */
-    private $id;
+    protected $id;
 
     /**
-     * @Column(type="string", length=32, nullable=false)
+     * @ORM\Column(type="string", length=32, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
-     * @Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
-     * @ManyToMany(targetEntity="User", mappedBy="roles")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
      */
-    private $users;
+    protected $users;
 
     /**
-	 * @ManyToMany(targetEntity="Permission", inversedBy="roles", fetch="EAGER")
-     * @JoinTable(name="nerd_roles_permissions")
+	 * @ORM\ManyToMany(targetEntity="Permission", inversedBy="roles", fetch="EAGER")
+     * @ORM\JoinTable(name="nerd_roles_permissions")
      */
-    private $permissions;
+    protected $permissions;
 
 
     public function __construct()

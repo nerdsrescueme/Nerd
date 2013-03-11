@@ -14,42 +14,42 @@ class PageHistory
 	 * @Id
 	 * @Column(name="page_id", type="integer", scale=8, nullable=false)
 	 */
-	private $pageId;
+	protected $pageId;
 
 	/**
 	 * @Column(name="site_id", type="integer", scale=2, nullable=false)
 	 */
-	private $siteId;
+	protected $siteId;
 
 	/**
 	 * @Column(type="string", length=160, nullable=false)
 	 */
-	private $title;
+	protected $title;
 
 	/**
 	 * @Column(type="string", length=160, nullable=true)
 	 */
-	private $subtitle;
+	protected $subtitle;
 
 	/**
 	 * @Column(type="string", length=200, nullable=false, unique=true)
 	 */
-	private $uri;
+	protected $uri;
 
 	/**
 	 * @Column(type="string", length=200, nullable=true)
 	 */
-	private $description;
+	protected $description;
 
 	/**
 	 * @Column(type="string", length=16, nullable=true)
 	 */
-	private $status = 'one';
+	protected $status = 'one';
 
 	/**
 	 * @Column(name="created_at", type="datetime", nullable=false)
 	 */
-	private $createdAt;
+	protected $createdAt;
 
 
 	public function getPageId()

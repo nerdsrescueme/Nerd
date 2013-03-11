@@ -7,19 +7,19 @@ use CMS\Entity\Page;
 trait Regioned
 {
 	/**
-	 * @Column(name="page_id", type="integer", scale=8, nullable=false)
+	 * @ORM\Column(name="page_id", type="integer", scale=8, nullable=false)
 	 */
-	private $pageId;
+	protected $pageId;
 
 	/**
-	 * @Column(name="`key`", type="string", length=32, nullable=false)
+	 * @ORM\Column(name="`key`", type="string", length=32, nullable=false)
 	 */
-	private $key;
+	protected $key;
 
 	/**
-	 * @Column(type="text", nullable=false)
+	 * @ORM\Column(type="text", nullable=false)
 	 */
-	private $data;
+	protected $data;
 
 	/**
      * Returns associated page id

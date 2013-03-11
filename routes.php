@@ -40,6 +40,7 @@ return function(Map $router)
     ]);
 
     $router->attach('/admin/blog', $generator('blog'));
+    $router->attach('/admin/users', $generator('users'));
 
     $router->add(null, '/admin/{:controller}/{:action}/{:id:(\d+)}');
 };

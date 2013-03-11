@@ -16,7 +16,7 @@ class Snippet
 	 * @Column(type="integer", scale=8, nullable=false)
 	 * @GeneratedValue
 	 */
-	private $id;
+	protected $id;
 
 	/**
 	 * Overload trait default property
@@ -24,5 +24,5 @@ class Snippet
 	 * @ManyToOne(targetEntity="Page", inversedBy="snippets")
 	 * @JoinColumn(name="page_id", referencedColumnName="id")
 	 */
-	private $page;
+	protected $page;
 }

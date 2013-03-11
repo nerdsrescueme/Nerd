@@ -2,22 +2,24 @@
 
 namespace CMS\Entity\Traits;
 
-use DateTime;
+use DateTime as PHPDateTime;
 
 trait Timestamped
 {
 
     /**
-     * @Column(name="created_at", type="datetime", nullable=false)
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      * @Ext\Timestampable(on="create")
+     * @Assert\DateTime
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
-     * @Column(name="updated_at", type="datetime", nullable=false)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      * @Ext\Timestampable(on="update")
+     * @Assert\DateTime
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     /**
      * Returns creation datetime object
@@ -35,7 +37,7 @@ trait Timestamped
      * @param DateTime $datetime Creation date
      * @return void
      */
-    public function setCreatedAt(DateTime $datetime)
+    public function setCreatedAt(PHPDateTime $datetime)
     {
     	$this->createdAt = $datetime;
     }
@@ -56,7 +58,7 @@ trait Timestamped
      * @param DateTime $datetime Last updated date
      * @return void
      */
-    public function setUpdatedAt(DateTime $datetime)
+    public function setUpdatedAt(PHPDateTime $datetime)
     {
     	$this->updatedAt = $datetime;
     }

@@ -16,22 +16,22 @@ class Permission implements PermissionInterface
      * @Column(type="integer", scale=4, nullable=false)
      * @GeneratedValue
      */
-    private $id;
+    protected $id;
 
     /**
      * @Column(type="string", length=32, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @ManyToMany(targetEntity="Role", mappedBy="permissions")
      */
-    private $roles;
+    protected $roles;
 
 
     public function __construct()

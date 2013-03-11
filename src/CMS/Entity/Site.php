@@ -3,55 +3,58 @@
 namespace CMS\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Ext;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Entity
- * @Table(name="nerd_sites")
+ * @ORM\Entity
+ * @ORM\Table(name="nerd_sites")
  */
 class Site
 {
 	/**
-	 * @Id
-	 * @Column(type="integer", scale=2, nullable=false)
-	 * @GeneratedValue
+	 * @ORM\Id
+	 * @ORM\Column(type="integer", scale=2, nullable=false)
+	 * @ORM\GeneratedValue
 	 */
-	private $id;
+	protected $id;
 
 	/**
-	 * @Column(type="string", length=180, nullable=false)
+	 * @ORM\Column(type="string", length=180, nullable=false)
 	 */
-	private $host;
+	protected $host;
 
 	/**
-	 * @Column(type="string", length=32, nullable=false)
+	 * @ORM\Column(type="string", length=32, nullable=false)
 	 */
-	private $theme = 'default';
+	protected $theme = 'default';
 
 	/**
-	 * @Column(type="boolean", nullable=false)
+	 * @ORM\Column(type="boolean", nullable=false)
 	 */
-	private $active = 1;
+	protected $active = 1;
 
 	/**
-	 * @Column(type="boolean", nullable=false)
+	 * @ORM\Column(type="boolean", nullable=false)
 	 */
-	private $maintaining = 0;
+	protected $maintaining = 0;
 
 	/**
-	 * @Column(type="string", length=200, nullable=false)
+	 * @ORM\Column(type="string", length=200, nullable=false)
 	 */
-	private $description;
+	protected $description;
 
 	/**
-	 * @OneToMany(targetEntity="Page", mappedBy="site")
+	 * @ORM\OneToMany(targetEntity="Page", mappedBy="site")
 	 */
-	private $pages;
+	protected $pages;
 
 	/**
-     * @ManyToMany(targetEntity="Keyword", inversedBy="sites")
-     * @JoinTable(name="nerd_site_keywords")
+     * @ORM\ManyToMany(targetEntity="Keyword", inversedBy="sites")
+     * @ORM\JoinTable(name="nerd_site_keywords")
      */
-    private $keywords;
+    protected $keywords;
 
 
 	public function __construct()

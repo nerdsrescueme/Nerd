@@ -3,11 +3,21 @@
 namespace CMS\Controller;
 
 use CMS\IllegalSaveRequestException;
+use CMS\Entity\Post;
 
 class BlogController extends BaseController
 {
     public function browseAction()
     {
+        $post = new Post;
+        $post->setTitle('a');
+
+$violations = $this->getValidator()->validate($post);
+foreach ($violations as $violation) {
+    echo (string) $violation->getMessage().'<br>'.PHP_EOL;
+}
+die('');
+
         $this->addData('posts', $this->app['db.post']->getAllInSite());
 
         $this->page->setTitle('Browsing Posts');
@@ -16,7 +26,10 @@ class BlogController extends BaseController
 
     public function createAction()
     {
+        $this->addData('post', new Post);
 
+        $this->page->setTitle('Add new post');
+        $this->page->setLayout('admin/blog/create');
     }
 
     public function readAction()
