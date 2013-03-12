@@ -33,6 +33,7 @@ class Post
      * @ORM\ManyToOne(targetEntity="Site", inversedBy="pages")
      * @ORM\JoinColumn(name="site_id", referencedColumnName="id")
      * @Assert\NotBlank
+     * @Assert\Type(type="object")
      * 
      * @var Site
      */

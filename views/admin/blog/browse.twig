@@ -2,8 +2,10 @@
 
 {% block content %}
 
+<h1>Browsing blog posts</h1>
+
 {% if posts|length > 0 %}
-<table class="table table-hover">
+<table class="table table-hover table-striped">
 	<thead>
 		<tr>
 			<th>Post title</th>
@@ -11,7 +13,7 @@
 			<th>Posted on</th>
 			<th>Last updated</th>
 			<th>
-				<a href="/admin/blog/new" class="btn btn-mini">Add post</a>
+				<a href="/admin/blog/new" class="btn btn-success btn-mini">Add post</a>
 			</th>
 		</tr>
 	</thead>
@@ -25,7 +27,7 @@
 			<td>
 				<a href="/admin/blog/{{ post.id }}" class="btn btn-mini">View</a>
 				<a href="/admin/blog/{{ post.id }}/edit" class="btn btn-mini">Edit</a>
-				<a href="/admin/blog/{{ post.id }}/delete" class="btn btn-mini">Delete</a>
+				<a href="/admin/blog/{{ post.id }}/delete" class="btn btn-danger btn-mini">Delete</a>
 			</td>
 		</tr>
 	{% endfor %}

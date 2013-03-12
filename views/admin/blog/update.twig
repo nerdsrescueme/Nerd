@@ -1,6 +1,9 @@
 {% extends "admin/template.twig" %}
 
 {% block content %}
-	Edit blog view
-	{% include "admin/blog/form.twig" with { post: post } %}
+
+<h1>Editing blog post <small>{{ post.title }}</small></h1>
+<hr>
+{% include "admin/blog/form.twig" with { post: post } %}
+
 {% endblock %}

@@ -11,23 +11,33 @@ class BlogController extends BaseController
     {
         $post = new Post;
         $post->setTitle('a');
-
-$violations = $this->getValidator()->validate($post);
-foreach ($violations as $violation) {
-    echo (string) $violation->getMessage().'<br>'.PHP_EOL;
-}
-die('');
-
         $this->addData('posts', $this->app['db.post']->getAllInSite());
-
         $this->page->setTitle('Browsing Posts');
         $this->page->setLayout('admin/blog/browse');
     }
 
     public function createAction()
     {
-        $this->addData('post', new Post);
+        $post = new Post;
 
+        if ($this->isPost()) {
+die(var_dump($_POST));
+            $post->setSite($this->app['site']);
+            $post->setUser($this->app['user']);
+            $post->setTitle($this->post->get('title'));
+            $post->setExcerpt($this->post->get('excerpt'));
+            $post->setData($this->post->get('data'));
+
+            if (!count($violations = $this->validate($post))) {
+                $this->save($post);
+
+                return $this->app->redirect('/admin/blog');
+            }
+
+            $this->addData('violations', $violations);
+        }
+
+        $this->addData('post', $post);
         $this->page->setTitle('Add new post');
         $this->page->setLayout('admin/blog/create');
     }

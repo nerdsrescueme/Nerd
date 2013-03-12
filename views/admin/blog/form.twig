@@ -1,32 +1,46 @@
 
-  <form method="post" class="form-horizontal">
-    <fieldset>
-	    <div class="control-group">
+<form method="post">
+  <div class="row">
+    <div class="column span6">
+      <div class="control-group">
         <label class="control-label" for="post_title">Title</label>
         <div class="controls">
-          <input type="text" name="post[title]" id="post_title" class="input-xlarge" value="{{ post.title }}">
+          <input type="text" name="title" id="post_title" class="input-xxlarge" placeholder="Blog Post Title" value="{{ post.title }}">
         </div>
       </div>
-	    <div class="control-group">
+      <div class="control-group">
         <label class="control-label" for="post_excerpt">Excerpt</label>
         <div class="controls">
           <div class="textarea">
-            <textarea name="post[excerpt]" id="post_excerpt">{{ post.excerpt }}</textarea>
+            <textarea name="excerpt" id="post_excerpt" class="input-xxlarge" placeholder="Brief description of blog post content...">{{ post.excerpt }}</textarea>
           </div>
         </div>
       </div>
+      <div class="control-group">
+        <label class="control-label" for="post_keywords">Keywords</label>
+        <div class="controls">
+          <div class="textarea">
+            <input type="hidden" name="keywords" id="post_keywords" data-placeholder="Type keywords separated by commas (,)" data-ujs-tokenize>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column span6">
       <div class="control-group">
         <label class="control-label" for="post_data">Content</label>
         <div class="controls">
           <div class="textarea">
-            <textarea name="post[data]" id="post_data">{{ post.data }}</textarea>
+            <textarea name="data" id="post_data" class="input-block-level" rows="18">{{ post.data }}</textarea>
           </div>
         </div>
       </div>
-      <div class="control-group">
-        <div class="controls">
-          <button class="btn btn-default">Save</button>
-        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="column span12 form-actions">
+      <div class="pull-right">
+        <button class="btn btn-default">Save</button>
       </div>
-    </fieldset>
-  </form>
+    </div>
+  </div>
+</form>

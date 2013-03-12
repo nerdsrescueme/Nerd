@@ -22,24 +22,6 @@ trait Sited
     }
 
     /**
-     * Explicitly set site id association
-     * 
-     * @todo Remove validation check when scalar type hinting hits
-     * 
-     * @param integer $siteId ID of the site to associate
-     * @throws InvalidArgumentException If $siteId is not an integer value
-     * @return void
-     */
-    public function setSiteId($siteId)
-    {
-        if (!is_int($siteId)) {
-            throw new \InvalidArgumentException('Invalid type: Site ID must be an integer ['.gettype($siteId).'] given');
-        }
-
-        $this->siteId = $siteId;
-    }
-
-    /**
      * Returns associated site object
      * 
      * @return Site Site entity object

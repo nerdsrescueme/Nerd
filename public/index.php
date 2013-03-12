@@ -15,7 +15,7 @@ $app->authenticateFromSession();
     } catch (\CMS\Exception $e) {
         $page = false;
     }
-xdebug_break();
+
     if (!$page) {
         $app['response']->setStatusCode(404);
         $page = $app['db.page']->getError(404);

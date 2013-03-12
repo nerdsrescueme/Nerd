@@ -72,7 +72,6 @@ class CmsSessionHandler implements \SessionHandlerInterface
     {
         $this->record->setData(base64_encode($data));
         $this->em->persist($this->record);
-        $this->em->flush($this->record);
 
         return true;
     }

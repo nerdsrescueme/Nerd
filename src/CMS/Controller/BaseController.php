@@ -14,6 +14,8 @@ abstract class BaseController implements ControllerInterface
 	protected $response;
 	protected $page;
 	protected $data;
+	protected $post;
+	protected $get;
 
 	// Type route
 	public function __construct(Application $app, Route $route)
@@ -27,6 +29,8 @@ abstract class BaseController implements ControllerInterface
 	{
 		$this->request = $this->app['request'];
 		$this->response = $this->app['response'];
+		$this->post = $this->request->request;
+		$this->get = $this->request->query;
 
 		// Build a blank page object for controller to manipulate
 		$this->page = new Page;
@@ -52,9 +56,24 @@ abstract class BaseController implements ControllerInterface
 		return $this->app['validator'];
 	}
 
+	public function save($object)
+	{
+		return $this->app['db']->persist($object);
+	}
+
+	public function validate($object)
+	{
+		return $this->app['validator']->validate($object);
+	}
+
 	public function getData($key = null)
 	{
 		return $key ? $this->data[$key] : $this->data;
+	}
+
+	public function isPost()
+	{
+		return $this->request->isMethod('post');
 	}
 
 	public function addData($key, $value)

@@ -13,13 +13,13 @@ class Application extends \Pimple
     public function authenticate($email, $password, $encrypt = true)
     {
         $encrypt and $password = $this->_encrypt($password);
-        $this['current_user'] = $this['db.user']->authenticate($email, $password);
+        $this['user'] = $this['db.user']->authenticate($email, $password);
 
-        if ($this['current_user']) {
+        if ($this['user']) {
             $this['session']->set('user', ['email' => $email, 'password' => $password]);
         }
 
-        return $this['current_user'] ?: false;
+        return $this['user'] ?: false;
     }
 
     public function authenticateFromSession()
@@ -35,7 +35,7 @@ class Application extends \Pimple
     public function deauthenticate()
     {
         $this['session']->invalidate();
-        $this['current_user'] = null;
+        $this['user'] = null;
     }
 
     public function dispatch()
@@ -45,16 +45,19 @@ class Application extends \Pimple
         return $this['event.page'];
     }
 
-    public function finish($content = '')
+    public function finish($content = '', $persistData = true)
     {
+        // Persist all leftover added/updated database objects
+        if ($persistData) {
+            $this['session']->save();
+            $this['db']->flush();
+        }
+
         // Make ready and send the response
         $this['response']->setContent($content);
         $this['response']->prepare($this['request']);
         $this['response']->send();
-
-        // Persist all leftover added/updated database objects
-        $this['session']->save();
-        $this['db']->flush();
+        exit;
     }
 
     public function in($resolver) {

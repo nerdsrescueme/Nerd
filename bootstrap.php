@@ -48,7 +48,7 @@ set_exception_handler(function($exception) use ($app) {
             'exception' => $exception,
         ];
         $template = $app['tpl']->render('errors/500.twig', $data);
-        $app->finish($template);
+        $app->finish($template, false);
     } catch (\Exception $e) {
         die(var_dump($e));
     }
@@ -214,6 +214,13 @@ $app['site'] = $app->share(function() use ($app) {
 });
 
 /**
+ * Grab the current user
+ */
+$app['user'] = $app->share(function() use ($app) {
+    return $app['db.user']->find(1);
+});
+
+/**
  * Setup the template engine
  */
 $app['tpl'] = $app->share(function() use ($app, $env) {
@@ -230,7 +237,6 @@ $app['tpl'] = $app->share(function() use ($app, $env) {
         'debug' => $isDebug,
         'auto_reload' => $isDebug,
         'strict_variables' => true,
-        'base_template_class' => '\\CMS\\Twig\\Template'
     ));
 
     // Load extensions

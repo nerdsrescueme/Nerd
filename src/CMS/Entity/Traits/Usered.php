@@ -28,24 +28,6 @@ trait Usered
     }
 
     /**
-     * Explicitly set user id association
-     * 
-     * @todo Remove validation check when scalar type hinting hits
-     * 
-     * @param integer $userId ID of the user to associate
-     * @throws InvalidArgumentException If $userId is not an integer value
-     * @return void
-     */
-    public function setUserId($userId)
-    {
-        if (!is_int($userId)) {
-            throw new \InvalidArgumentException('Invalid type: User ID must be an integer ['.gettype($userId).'] given');
-        }
-
-        $this->userId = $userId;
-    }
-
-    /**
      * Returns associated user object
      * 
      * @return User User entity object
