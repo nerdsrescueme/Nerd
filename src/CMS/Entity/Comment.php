@@ -89,16 +89,6 @@ class Comment
         $this->type = $type;
     }
 
-    public function getParentId()
-    {
-        return $this->parentId();
-    }
-
-    public function setParentId($parentId)
-    {
-        $this->parentId = $parentId;
-    }
-
     public function getStatus()
     {
         return $this->status;
