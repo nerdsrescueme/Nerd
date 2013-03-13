@@ -8,6 +8,10 @@ use Secs\PermissionInterface;
 /**
  * @Entity(repositoryClass="CMS\Entity\Repository\PermissionRepository")
  * @Table(name="nerd_permissions")
+ * 
+ * @package NerdCMS
+ * @category Entities
+ * @author Frank Bardon Jr. <frank@nerdsrescue.me>
  */
 class Permission implements PermissionInterface
 {

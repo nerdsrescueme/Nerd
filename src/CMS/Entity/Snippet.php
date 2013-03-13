@@ -5,6 +5,10 @@ namespace CMS\Entity;
 /**
  * @Entity
  * @Table(name="nerd_snippets")
+ * 
+ * @package NerdCMS
+ * @category Entities
+ * @author Frank Bardon Jr. <frank@nerdsrescue.me>
  */
 class Snippet
 {

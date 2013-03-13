@@ -10,6 +10,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="CMS\Entity\Repository\PageRepository")
  * @ORM\Table(name="nerd_pages")
+ * @ORM\HasLifecycleCallbacks
+ * 
+ * @package NerdCMS
+ * @category Entities
+ * @author Frank Bardon Jr. <frank@nerdsrescue.me>
  */
 class Page
 {
@@ -18,14 +23,24 @@ class Page
     use Traits\Timestamped;
 
     // Change frequencies
-    const FREQ_DEFAULT = 'weekly';
-    const FREQ_ALWAYS  = 'always';
-    const FREQ_HOURLY  = 'hourly';
-    const FREQ_DAILY   = 'daily';
-    const FREQ_WEEKLY  = 'weekly';
-    const FREQ_MONTHLY = 'monthly';
-    const FREQ_YEARLY  = 'yearly';
-    const FREQ_NEVER   = 'never';
+    const FREQ_DEFAULT = 5;
+    const FREQ_ALWAYS  = 2;
+    const FREQ_HOURLY  = 3;
+    const FREQ_DAILY   = 4;
+    const FREQ_WEEKLY  = 5;
+    const FREQ_MONTHLY = 6;
+    const FREQ_YEARLY  = 7;
+    const FREQ_NEVER   = 0;
+
+    const STATUS_DEFAULT = 6;
+    const STATUS_PUBLISHED = 9;
+    const STATUS_FUTURE = 8;
+    const STATUS_DRAFT = 7;
+    const STATUS_PENDING = 6;
+    const STATUS_PRIVATE = 5;
+    const STATUS_AUTODRAFT = 4;
+    const STATUS_INHERIT = 3;
+    const STATUS_TRASH = 0;
 
     /**
      * @ORM\Id
@@ -68,9 +83,10 @@ class Page
     protected $description;
 
     /**
-     * @ORM\Column(type="string", length=16, nullable=true)
+     * @ORM\Column(type="integer", length=2, nullable=true)
+     * @Assert\Choice(callback="getStatuses")
      */
-    protected $status = 'one';
+    protected $status = self::STATUS_DEFAULT;
 
     /**
      * @ORM\Column(type="integer", scale=2, nullable=false)
@@ -78,7 +94,8 @@ class Page
     protected $priority = 5;
 
     /**
-     * @ORM\Column(name="change_frequency", type="string", length=16, nullable=true)
+     * @ORM\Column(name="change_frequency", type="integer", length=2, nullable=false)
+     * @Assert\Choice(callback="getChangeFrequencies")
      */
     protected $changeFrequency = self::FREQ_DEFAULT;
 
@@ -88,27 +105,15 @@ class Page
      */
     protected $keywords;
 
-    ///**
-    // * @ORM\OneToMany(targetEntity="Component", mappedBy="page")
-    // */
-    //protected $components;
-
     /**
      * @ORM\OneToMany(targetEntity="Region", mappedBy="page")
      */
     protected $regions;
 
-    ///**
-    // * @ORM\OneToMany(targetEntity="Snippet", mappedBy="page")
-    // */
-    //protected $snippets;
-
     public function __construct()
     {
         $this->keywords = new ArrayCollection();
-        //$this->components = new ArrayCollection();
         $this->regions = new ArrayCollection();
-        //$this->snippets = new ArrayCollection();
     }
 
     public function getLayout()
@@ -170,6 +175,20 @@ class Page
     {
         // Need to use enum prediction
         $this->status = $status;
+    }
+
+    public function getStatuses()
+    {
+        return [
+            self::STATUS_PUBLISHED,
+            self::STATUS_FUTURE,
+            self::STATUS_DRAFT,
+            self::STATUS_PENDING,
+            self::STATUS_PRIVATE,
+            self::STATUS_AUTODRAFT,
+            self::STATUS_INHERIT,
+            self::STATUS_TRASH,
+        ];
     }
 
     public function getChangeFrequency()

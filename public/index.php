@@ -6,6 +6,11 @@
 $app = require '../bootstrap.php';
 
 $app->setup();
+
+$c = new \CMS\Entity\Comment;
+
+die(var_dump($c));
+
 $app->authenticateFromSession();
 
     try {

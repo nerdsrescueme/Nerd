@@ -10,9 +10,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="nerd_sites")
+ * 
+ * @package NerdCMS
+ * @category Entities
+ * @author Frank Bardon Jr. <frank@nerdsrescue.me>
  */
 class Site
 {
+	use Traits\Keywordable;
+
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="integer", scale=2, nullable=false)
@@ -146,24 +152,5 @@ class Site
 	public function getPages()
 	{
 		return $this->pages;
-	}
-
-	/**
-	 * Keyword association
-	 */
-	public function getKeywords()
-	{
-		return $this->keywords;
-	}
-
-	public function getKeywordsAsString()
-	{
-		$keywords = '';
-
-		foreach ($this->getKeywords() as $keyword) {
-			$keywords .= $keyword.', ';
-		}
-
-		return substr($keywords, 0, -2);
 	}
 }

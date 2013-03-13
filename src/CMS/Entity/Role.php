@@ -12,6 +12,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="CMS\Entity\Repository\RoleRepository")
  * @ORM\Table(name="nerd_roles")
+ * 
+ * @package NerdCMS
+ * @category Entities
+ * @author Frank Bardon Jr. <frank@nerdsrescue.me>
  */
 class Role implements RoleInterface
 {

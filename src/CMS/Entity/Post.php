@@ -8,8 +8,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Post entity
+ * 
  * @ORM\Entity(repositoryClass="CMS\Entity\Repository\PostRepository")
  * @ORM\Table(name="nerd_posts")
+ * @ORM\HasLifecycleCallbacks
+ * 
+ * @package NerdCMS
+ * @category Entities
+ * @author Frank Bardon Jr. <frank@nerdsrescue.me>
  */
 class Post
 {
@@ -17,6 +24,17 @@ class Post
     use Traits\Timestamped;
     use Traits\Sited;
     use Traits\Usered;
+    use Traits\Keywordable;
+
+    const STATUS_DEFAULT = 6;
+    const STATUS_PUBLISHED = 9;
+    const STATUS_FUTURE = 8;
+    const STATUS_DRAFT = 7;
+    const STATUS_PENDING = 6;
+    const STATUS_PRIVATE = 5;
+    const STATUS_AUTODRAFT = 4;
+    const STATUS_INHERIT = 3;
+    const STATUS_TRASH = 0;
 
     /**
      * @ORM\Id
@@ -66,12 +84,12 @@ class Post
     protected $data;
 
     /**
-     * @ORM\Column(type="string", length=16, nullable=false)
-     * @Assert\Choice(choices = {"one"}, message = "Choose a valid post status.")
+     * @ORM\Column(type="integer", length=2, nullable=false)
+     * @Assert\Choice(callback="getStatuses")
      * 
      * @var string
      */
-    protected $status = 'one';
+    protected $status = self::STATUS_DEFAULT;
 
     /**
      * @ORM\ManyToMany(targetEntity="Keyword", inversedBy="post")
@@ -121,29 +139,22 @@ class Post
         return $this->status;
     }
 
+    public function getStatuses()
+    {
+        return [
+            self::STATUS_PUBLISHED,
+            self::STATUS_FUTURE,
+            self::STATUS_DRAFT,
+            self::STATUS_PENDING,
+            self::STATUS_PRIVATE,
+            self::STATUS_AUTODRAFT,
+            self::STATUS_INHERIT,
+            self::STATUS_TRASH,
+        ];
+    }
+
     public function setStatus($status)
     {
-        // Do status check!!!
         $this->status = $status;
-    }
-
-    /**
-     * Keyword association
-     */
-    public function getKeywords()
-    {
-        return $this->keywords;
-    }
-
-    public function getKeywordsAsText()
-    {
-        $keywords = $this->getKeywords();
-        $text = '';
-
-        foreach ($keywords as $keyword) {
-            $text .= $keyword->getKeyword().', ';
-        }
-
-        return substr($text, 0, -2);
     }
 }

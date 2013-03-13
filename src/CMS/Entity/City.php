@@ -2,6 +2,10 @@
 
 namespace CMS\Entity;
 
+use Gedmo\Mapping\Annotation as Ext;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * City entity
  * 
@@ -9,13 +13,14 @@ namespace CMS\Entity;
  * @Table(name="nerd_cities")
  * 
  * @package NerdCMS
- * @subpackage Entities
+ * @category Entities
+ * @author Frank Bardon Jr. <frank@nerdsrescue.me>
  */
 class City
 {
     /**
 	 * @Id
-	 * @Column(type="integer", scale=5, nullable=false)
+	 * @Column(type="integer", scale=5, nullable=false) 
      *
      * @var integer
 	 */
@@ -73,21 +78,6 @@ class City
     }
 
     /**
-     * Set entity zip code
-     * 
-     * When set/getting a zip code with a leading 0, please quote the string.
-     * This must be done in order to prevent PHP from interpreting the integer 
-     * as an octal number (ie. 08093 should be "08093")
-     * 
-     * @param integer|string $zip Zip code
-     * @return void
-     */
-    public function setZip($zip)
-    {
-        $this->zip = (int) $zip;
-    }
-
-    /**
      * Returns entity city name
      * 
      * @return string
@@ -95,17 +85,6 @@ class City
     public function getCity()
     {
         return $this->city;
-    }
-
-    /**
-     * Set entity city name
-     * 
-     * @param string $city City
-     * @return void
-     */
-    public function setCity($city)
-    {
-        $this->city = (string) $city;
     }
 
     /**
@@ -119,17 +98,6 @@ class City
     }
 
     /**
-     * Set entity state association
-     * 
-     * @param State $state Related state entity
-     * @return void
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-    }
-
-    /**
      * Returns entity county
      * 
      * @return string
@@ -137,17 +105,6 @@ class City
     public function getCounty()
     {
         return $this->county;
-    }
-
-    /**
-     * Set entity county
-     * 
-     * @param string $county Entity county
-     * @return void
-     */
-    public function setCounty($county)
-    {
-        $this->county = (string) $county;
     }
 
     /**
@@ -171,17 +128,6 @@ class City
     }
 
     /**
-     * Set entity latitude coordinate
-     * 
-     * @param float $latitude Entity latitude
-     * @return void
-     */
-    public function setLatitude($latitude)
-    {
-        $this->latitude = (float) $latitude;
-    }
-
-    /**
      * Returns entity longitude coordinate
      * 
      * @return float
@@ -199,17 +145,6 @@ class City
     public function getRadianLongitude()
     {
         return deg2rad($this->longitude);
-    }
-
-    /**
-     * Set entity longitude coordinate
-     * 
-     * @param float $longitude Entity longitude
-     * @return void
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = (float) $longitude;
     }
 
     /**

@@ -5,6 +5,10 @@ namespace CMS\Entity;
 /**
  * @Entity(readOnly=true)
  * @Table(name="nerd_countries")
+ * 
+ * @package NerdCMS
+ * @category Entities
+ * @author Frank Bardon Jr. <frank@nerdsrescue.me>
  */
 class Country
 {

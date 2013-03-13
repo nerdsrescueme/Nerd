@@ -13,9 +13,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="CMS\Entity\Repository\UserRepository")
  * @ORM\Table(name="nerd_users")
+ * 
+ * @package NerdCMS
+ * @category Entities
+ * @author Frank Bardon Jr. <frank@nerdsrescue.me>
  */
 class User implements UserInterface
 {
+    use Traits\Timestamped;
+
     // Constants
     const STATUS_DEFAULT  = 'inactive';
     const STATUS_INACTIVE = 'inactive';
@@ -94,16 +100,6 @@ class User implements UserInterface
      * @ORM\Column(type="boolean", nullable=false)
      */
     protected $activated = false;
-
-    /**
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    protected $createdAt;
-
-    /**
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
-     */
-    protected $updatedAt;
 
     /**
      * @ORM\OneToOne(targetEntity="CMS\Entity\User\Metadata")

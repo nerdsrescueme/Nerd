@@ -1,14 +1,13 @@
-
 SET FOREIGN_KEY_CHECKS=0;
 SET AUTOCOMMIT=0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-
 
 
 -- ---------------------------------------------------------------------------------
@@ -24,16 +23,6 @@ CREATE TABLE IF NOT EXISTS `nerd_sessions` (
   PRIMARY KEY (`id`),
   KEY `updated_at` (`updated_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-  DELIMITER $$
-  DROP TRIGGER IF EXISTS `timestamp_nerd_session`;
-  CREATE TRIGGER `timestamp_nerd_session`
-    BEFORE INSERT ON `nerd_sessions` FOR EACH ROW
-    BEGIN
-      SET NEW.`created_at` = CURRENT_TIMESTAMP();
-    END
-  $$
-  DELIMITER ;
 
 DROP TABLE IF EXISTS `nerd_keywords`;
 CREATE TABLE IF NOT EXISTS `nerd_keywords` (
@@ -75,18 +64,7 @@ CREATE TABLE IF NOT EXISTS `nerd_states` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-  INSERT INTO `nerd_states` (`code`, `name`) VALUES ('AL', 'Alabama'),('AK', 'Alaska'),('AZ', 'Arizona'),('AR', 'Arkansas'),('CA', 'California'),('CO', 'Colorado'),('CT', 'Connecticut'),('DE', 'Delaware'),('DC', 'District of Columbia'),('FL', 'Florida'),('GA', 'Georgia'),('HI', 'Hawaii'),('ID', 'Idaho'),('IL', 'Illinois'),('IN', 'Indiana'),('IA', 'Iowa'),('KS', 'Kansas'),('KY', 'Kentucky'),('LA', 'Louisiana'),('ME', 'Maine'),('MD', 'Maryland'),('MA', 'Massachusetts'),('MI', 'Michigan'),('MN', 'Minnesota'),('MS', 'Mississippi'),('MO', 'Missouri'),('MT', 'Montana'),('NE', 'Nebraska'),('NV', 'Nevada'),('NH', 'New Hampshire'),('NJ', 'New Jersey'),('NM', 'New Mexico'),('NY', 'New York'),('NC', 'North Carolina'),('ND', 'North Dakota'),('OH', 'Ohio'),('OK', 'Oklahoma'),('OR', 'Oregon'),('PA', 'Pennsylvania'),('PR', 'Puerto Rico'),('RI', 'Rhode Island'),('SC', 'South Carolina'),('SD', 'South Dakota'),('TN', 'Tennessee'),('TX', 'Texas'),('UT', 'Utah'),('VT', 'Vermont'),('VA', 'Virginia'),('WA', 'Washington'),('WV', 'West Virginia'),('WI', 'Wisconsin'),('WY', 'Wyoming');
-
-  DELIMITER $$
-  DROP TRIGGER IF EXISTS `deny_delete_nerd_states`;
-  CREATE TRIGGER `deny_delete_nerd_states`
-    BEFORE DELETE ON `nerd_states` FOR EACH ROW
-    BEGIN
-      DECLARE msg VARCHAR(255);
-      SET msg = "States may not be deleted from `nerd_states`.";
-      SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
-  END$$
-  DELIMITER ;
+INSERT INTO `nerd_states` (`code`, `name`) VALUES ('AL', 'Alabama'),('AK', 'Alaska'),('AZ', 'Arizona'),('AR', 'Arkansas'),('CA', 'California'),('CO', 'Colorado'),('CT', 'Connecticut'),('DE', 'Delaware'),('DC', 'District of Columbia'),('FL', 'Florida'),('GA', 'Georgia'),('HI', 'Hawaii'),('ID', 'Idaho'),('IL', 'Illinois'),('IN', 'Indiana'),('IA', 'Iowa'),('KS', 'Kansas'),('KY', 'Kentucky'),('LA', 'Louisiana'),('ME', 'Maine'),('MD', 'Maryland'),('MA', 'Massachusetts'),('MI', 'Michigan'),('MN', 'Minnesota'),('MS', 'Mississippi'),('MO', 'Missouri'),('MT', 'Montana'),('NE', 'Nebraska'),('NV', 'Nevada'),('NH', 'New Hampshire'),('NJ', 'New Jersey'),('NM', 'New Mexico'),('NY', 'New York'),('NC', 'North Carolina'),('ND', 'North Dakota'),('OH', 'Ohio'),('OK', 'Oklahoma'),('OR', 'Oregon'),('PA', 'Pennsylvania'),('PR', 'Puerto Rico'),('RI', 'Rhode Island'),('SC', 'South Carolina'),('SD', 'South Dakota'),('TN', 'Tennessee'),('TX', 'Texas'),('UT', 'Utah'),('VT', 'Vermont'),('VA', 'Virginia'),('WA', 'Washington'),('WV', 'West Virginia'),('WI', 'Wisconsin'),('WY', 'Wyoming');
 
 DROP TABLE IF EXISTS `nerd_themes`;
 CREATE TABLE IF NOT EXISTS `nerd_themes` (
@@ -108,16 +86,6 @@ CREATE TABLE IF NOT EXISTS `nerd_layouts` (
   PRIMARY KEY(`id`)
 );
 
-  DELIMITER $$
-  DROP TRIGGER IF EXISTS `timestamp_nerd_layouts`;
-  CREATE TRIGGER `timestamp_nerd_layouts`
-    BEFORE INSERT ON `nerd_layouts` FOR EACH ROW
-    BEGIN
-      SET NEW.`created_at` = CURRENT_TIMESTAMP();
-    END
-  $$
-  DELIMITER ;
-
 DROP TABLE IF EXISTS `nerd_words`;
 CREATE TABLE IF NOT EXISTS `nerd_words` (
   `word` char(32) NOT NULL,
@@ -138,24 +106,14 @@ CREATE TABLE IF NOT EXISTS `nerd_pages` (
   `subtitle` char(160) DEFAULT NULL,
   `uri` char(200) NOT NULL,
   `description` char(200) DEFAULT NULL,
-  `status` char(16) COLLATE utf8_bin DEFAULT 'one',
+  `status` int(2) unsigned zerofill NOT NULL DEFAULT '06',
   `priority` int(2) unsigned zerofill NOT NULL DEFAULT '05',
-  `change_frequency` char(16) COLLATE utf8_bin DEFAULT 'weekly',
+  `change_frequency` int(2) unsigned zerofill NOT NULL DEFAULT '06',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY (`site_id`, `uri`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-  DELIMITER $$
-  DROP TRIGGER IF EXISTS `timestamp_nerd_pages`;
-  CREATE TRIGGER `timestamp_nerd_pages`
-    BEFORE INSERT ON `nerd_pages` FOR EACH ROW
-    BEGIN
-      SET NEW.`created_at` = CURRENT_TIMESTAMP();
-    END
-  $$
-  DELIMITER ;
 
   DROP TABLE IF EXISTS `nerd_page_history`;
   CREATE TABLE IF NOT EXISTS `nerd_page_history` (
@@ -165,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `nerd_pages` (
     `subtitle` char(160) DEFAULT NULL,
     `uri` char(200) NOT NULL,
     `description` char(200) DEFAULT NULL,
-    `status` char(32) NOT NULL,
+    `status` int(2) unsigned zerofill NOT NULL,
     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`page_id`, `created_at`)
   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -360,10 +318,10 @@ CREATE TABLE IF NOT EXISTS `nerd_sites` (
 DROP TABLE IF EXISTS `nerd_comments`;
 CREATE TABLE IF NOT EXISTS `nerd_comments` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `type_id` int(2) unsigned NOT NULL,
+  `type` int(2) unsigned NOT NULL,
   `parent_id` int(10) unsigned DEFAULT NULL,
   `data` text NOT NULL,
-  `status` char(16) COLLATE utf8_bin DEFAULT 'one',
+  `status` int(2) unsigned zerofill NOT NULL DEFAULT '01',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
@@ -394,7 +352,7 @@ CREATE TABLE IF NOT EXISTS `nerd_posts` (
   `title` char(255) NOT NULL,
   `excerpt` text DEFAULT NULL,
   `data` text NOT NULL,
-  `status` char(16) COLLATE utf8_bin DEFAULT 'one',
+  `status` int(2) unsigned zerofill NOT NULL DEFAULT '06',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
@@ -411,20 +369,9 @@ CREATE TABLE IF NOT EXISTS `nerd_posts` (
   CREATE TABLE IF NOT EXISTS `nerd_post_keywords` (
     `post_id` int(7) unsigned NOT NULL,
     `keyword_id` int(11) unsigned NOT NULL,
-    PRIMARY KEY (`page_id`,`keyword_id`),
+    PRIMARY KEY (`post_id`,`keyword_id`),
     KEY `keyword_id` (`keyword_id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-  DELIMITER $$
-  DROP TRIGGER IF EXISTS `timestamp_nerd_posts`;
-  CREATE TRIGGER `timestamp_nerd_posts`
-    BEFORE INSERT ON `nerd_posts` FOR EACH ROW
-    BEGIN
-      SET NEW.`created_at` = CURRENT_TIMESTAMP();
-    END
-  $$
-  DELIMITER ;
 
 
 -- ---------------------------------------------------------------------------------
@@ -462,16 +409,6 @@ CREATE TABLE IF NOT EXISTS `nerd_users` (
     `zip` int(5) unsigned zerofill DEFAULT NULL,
     PRIMARY KEY (`user_id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-  DELIMITER $$
-  DROP TRIGGER IF EXISTS `timestamp_nerd_users`;
-  CREATE TRIGGER `timestamp_nerd_users`
-    BEFORE INSERT ON `nerd_users` FOR EACH ROW
-    BEGIN
-      SET NEW.`created_at` = CURRENT_TIMESTAMP();
-    END
-  $$
-  DELIMITER ;
 
   DROP TABLE IF EXISTS `nerd_roles`;
   CREATE TABLE IF NOT EXISTS `nerd_roles` (
@@ -612,12 +549,12 @@ INSERT INTO `nerd_roles_permissions` (`role_id`, `permission_id`) VALUES
 (3, 3);
 
 INSERT INTO `nerd_sites` (`id`, `host`, `theme`, `active`, `maintaining`, `description`) VALUES
-(1, 'localhost', 'default', 1, 0, 'Default site upon installation. This defaults to a locally hosted site.');
-
+(1, 'nerd.dev', 'default', 1, 0, 'Default site upon installation. This defaults to a locally hosted site.');
 
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

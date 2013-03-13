@@ -7,6 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @Entity(readOnly=true)
  * @Table(name="nerd_page_history")
+ * @ORM\HasLifecycleCallbacks
+ * 
+ * @package NerdCMS
+ * @category Entities
+ * @author Frank Bardon Jr. <frank@nerdsrescue.me>
  */
 class PageHistory
 {

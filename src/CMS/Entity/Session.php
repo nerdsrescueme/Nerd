@@ -9,9 +9,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="CMS\Entity\Repository\SessionRepository")
  * @ORM\Table(name="nerd_sessions")
+ * @ORM\HasLifecycleCallbacks
+ * 
+ * @package NerdCMS
+ * @category Entities
+ * @author Frank Bardon Jr. <frank@nerdsrescue.me>
  */
 class Session
 {
+	use Traits\Timestamped;
+
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="string", length=50, nullable=true)
@@ -22,16 +29,6 @@ class Session
 	 * @ORM\Column(type="string", nullable=false)
 	 */
 	protected $data;
-
-	/**
-	 * @ORM\Column(name="created_at", type="datetime", nullable=true)
-	 */
-	protected $createdAt;
-
-	/**
-	 * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-	 */
-	protected $updatedAt;
 
 
 	public function getId()
@@ -56,25 +53,5 @@ class Session
 	public function setData($data)
 	{
 		$this->data = $data;
-	}
-
-	public function getCreatedAt()
-	{
-		return $this->createdAt;
-	}
-
-	public function setCreatedAt()
-	{
-		throw new \RuntimeException('Created at is automatically set by the database');
-	}
-
-	public function getUpdatedAt()
-	{
-		return $this->updatedAt;
-	}
-
-	public function setUpdatedAt()
-	{
-		throw new \RuntimeException('Updated at is automatically set by the database');
 	}
 }

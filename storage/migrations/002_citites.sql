@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 3.5.2
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Aug 24, 2012 at 03:38 PM
--- Server version: 5.5.25a
--- PHP Version: 5.4.4
-
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT=0;
