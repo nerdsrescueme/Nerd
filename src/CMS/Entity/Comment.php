@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="nerd_comments")
  * @ORM\HasLifecycleCallbacks
+ * @InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="type", type="integer")
+ * @DiscriminatorMap({1="PostComment", 2="ProductComment", 3="PageComment"})
  * 
  * @package NerdCMS
  * @category Entities
@@ -49,7 +52,6 @@ class Comment
     /**
      * @ORM\Column(name="parent_id", type="integer", scale=10, nullable=false)
      * @Assert\NotBlank
-     * @Assert\Type(type="object")
      */
     protected $parentId;
 
