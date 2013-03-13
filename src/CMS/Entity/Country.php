@@ -2,9 +2,11 @@
 
 namespace CMS\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity(readOnly=true)
- * @Table(name="nerd_countries")
+ * @ORM\Entity(readOnly=true)
+ * @ORM\Table(name="nerd_countries")
  * 
  * @package NerdCMS
  * @category Entities
@@ -13,42 +15,61 @@ namespace CMS\Entity;
 class Country
 {
     /**
-	 * @Id
-	 * @Column(type="string", length=2, nullable=false)
+	 * @ORM\Id
+	 * @ORM\Column(type="string", length=2, nullable=false)
 	 */
 	protected $short;
 
     /**
-     * @Column(type="string", length=3, nullable=false)
+     * @ORM\Column(type="string", length=3, nullable=false)
      */
     protected $long;
 
     /**
-     * @Column(type="integer", scale=3, nullable=false)
+     * @ORM\Column(type="integer", scale=3, nullable=false)
      */
     protected $numeric;
 
     /**
-     * @Column(type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     protected $name;
 
-
+    /**
+     * Return country short code
+     *
+     * @return string
+     */
     public function getShort()
     {
         return $this->short;
     }
 
+    /**
+     * Return country long code
+     *
+     * @return string
+     */
     public function getLong()
     {
         return $this->long;
     }
 
+    /**
+     * Return country numeric code
+     *
+     * @return integer
+     */
     public function getNumeric()
     {
         return $this->numeric;
     }
 
+    /**
+     * Return country name
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;

@@ -69,16 +69,6 @@ class Keyword
     }
 
     /**
-     * Get associated page entities
-     * 
-     * @return array[Page]
-     */
-    public function getPages()
-    {
-        return $this->pages;
-    }
-
-    /**
      * Set keyword
      * 
      * @param string $keyword Keyword
@@ -87,6 +77,16 @@ class Keyword
     public function setKeyword($keyword)
     {
         $this->keyword = trim($keyword);
+    }
+
+    /**
+     * Get associated page entities
+     * 
+     * @return array[Page]
+     */
+    public function getPages()
+    {
+        return $this->pages;
     }
 
     /**

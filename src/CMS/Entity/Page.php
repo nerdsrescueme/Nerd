@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Page entity
+ *
  * @ORM\Entity(repositoryClass="CMS\Entity\Repository\PageRepository")
  * @ORM\Table(name="nerd_pages")
  * @ORM\HasLifecycleCallbacks
@@ -59,26 +61,34 @@ class Page
 
     /**
      * @ORM\Column(type="string", length=32, nullable=false)
+     * @Assert\Length(min=3, max=32)
+     * @Assert\NotBlank
      */
     protected $layout = 'default';
 
     /**
      * @ORM\Column(type="string", length=160, nullable=false)
+     * @Assert\Length(min=3, max=160)
+     * @Assert\NotBlank
      */
     protected $title;
 
     /**
      * @ORM\Column(type="string", length=160, nullable=true)
+     * @Assert\Length(min=3, max=32)
      */
     protected $subtitle;
 
     /**
      * @ORM\Column(type="string", length=200, nullable=false, unique=true)
+     * @Assert\Length(min=2, max=200)
+     * @Assert\NotBlank
      */
     protected $uri;
 
     /**
      * @ORM\Column(type="string", length=200, nullable=true)
+     * @Assert\Length(min=3, max=200)
      */
     protected $description;
 
@@ -90,6 +100,7 @@ class Page
 
     /**
      * @ORM\Column(type="integer", scale=2, nullable=false)
+     * 
      */
     protected $priority = 5;
 
@@ -110,73 +121,104 @@ class Page
      */
     protected $regions;
 
+    /**
+     * Constructor
+     *
+     * @return this
+     */
     public function __construct()
     {
         $this->keywords = new ArrayCollection();
         $this->regions = new ArrayCollection();
     }
 
-    public function getLayout()
+    /**
+     * Return page change frequency
+     *
+     * @return integer
+     */
+    public function getChangeFrequency()
     {
-        return $this->layout;
+        return $this->changeFrequency;
     }
 
-    public function setLayout($layout)
+    /**
+     * Return all available change frequencies
+     *
+     * @return array[integer]
+     */
+    public function getChangeFrequencies()
     {
-        $this->layout = $layout;
+        return [
+            self::FREQ_ALWAYS,
+            self::FREQ_HOURLY,
+            self::FREQ_DAILY,
+            self::FREQ_WEEKLY,
+            self::FREQ_MONTHLY,
+            self::FREQ_YEARLY,
+            self::FREQ_NEVER,
+        ];
     }
 
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    public function getSubtitle()
-    {
-        return $this->subtitle;
-    }
-
-    public function setSubtitle($subtitle)
-    {
-        $this->subtitle = $subtitle;
-    }
-
-    public function getUri()
-    {
-        return $this->uri;
-    }
-
-    public function setUri($uri)
-    {
-        $this->uri = trim($uri, '/');
-    }
-
+    /**
+     * Return page description
+     *
+     * @return string
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription($description)
+    /**
+     * Return page layout
+     *
+     * @return string
+     */
+    public function getLayout()
     {
-        $this->description = $description;
+        return $this->layout;
     }
 
+    /**
+     * Return associated region entities
+     *
+     * @return array[Region]
+     */
+    public function getRegions()
+    {
+        return $this->regions;
+    }
+
+    /**
+     * Return associated region entity by name
+     *
+     * @return Region
+     */
+    public function getRegion($name)
+    {
+        foreach ($this->getRegions() as $region) {
+            if ($region->getKey() == $name) {
+                return $region;
+            }
+        }
+    }
+
+    /**
+     * Return page status
+     *
+     * @return integer
+     */
     public function getStatus()
     {
         return $this->status;
     }
 
-    public function setStatus($status)
-    {
-        // Need to use enum prediction
-        $this->status = $status;
-    }
-
+    /**
+     * Return available page statuses
+     *
+     * @return array[integer]
+     */
     public function getStatuses()
     {
         return [
@@ -191,22 +233,65 @@ class Page
         ];
     }
 
-    public function getChangeFrequency()
+    /**
+     * Return page subtitle
+     *
+     * @return string
+     */
+    public function getSubtitle()
     {
-        return $this->changeFrequency;
+        return $this->subtitle;
     }
 
-    public function getChangeFrequencies()
+    /**
+     * Return page title
+     *
+     * @return string
+     */
+    public function getTitle()
     {
-        return [
-            self::FREQ_ALWAYS,
-            self::FREQ_HOURLY,
-            self::FREQ_DAILY,
-            self::FREQ_WEEKLY,
-            self::FREQ_MONTHLY,
-            self::FREQ_YEARLY,
-            self::FREQ_NEVER,
-        ];
+        return $this->title;
+    }
+
+    /**
+     * Return page uri
+     *
+     * @return string
+     */
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
+
+    public function setLayout($layout)
+    {
+        $this->layout = trim($layout);
+    }
+
+    public function setTitle($title)
+    {
+        $this->title = trim($title);
+    }
+
+    public function setSubtitle($subtitle)
+    {
+        $this->subtitle = trim($subtitle);
+    }
+
+    public function setUri($uri)
+    {
+        $this->uri = trim($uri, '/');
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = trim($description);
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     public function setChangeFrequency($frequency)
@@ -218,78 +303,9 @@ class Page
         $this->changeFrequency = $frequency;
     }
 
-    /**
-     * Keyword association
-     */
-    public function getKeywords()
-    {
-        return $this->keywords;
-    }
-
-    public function getKeywordsAsText()
-    {
-        $keywords = $this->getKeywords();
-        $text = '';
-
-        foreach ($keywords as $keyword) {
-            $text .= $keyword->getKeyword().', ';
-        }
-
-        return substr($text, 0, -2);
-    }
-
-    /*
-    public function getComponents()
-    {
-        return $this->components;
-    }
-
-    public function getComponent($name)
-    {
-        foreach ($this->getComponents() as $component) {
-            if ($component->getKey() == $name) {
-                return $component;
-            }
-        }
-    }
-    */
-
-    /**
-     * Region association
-     */
-    public function getRegions()
-    {
-        return $this->regions;
-    }
-
-    public function getRegion($name)
-    {
-        foreach ($this->getRegions() as $region) {
-            if ($region->getKey() == $name) {
-                return $region;
-            }
-        }
-    }
-
     public function addRegion(Region $region)
     {
         $region->setPage($this);
         $this->regions[] = $region;
     }
-
-    /*
-    public function getSnippets()
-    {
-        return $this->snippets;
-    }
-
-    public function getSnippet($name)
-    {
-        foreach ($this->getSnippets() as $snippet) {
-            if ($snippet->getKey() == $name) {
-                return $snippet;
-            }
-        }
-    }
-    */
 }
